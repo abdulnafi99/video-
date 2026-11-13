@@ -470,7 +470,7 @@ function renderAt(t) {
   renderer.setViewport(0, 0, W, H);
   // ----- S1b: aerial reveal of the finished home (2.6 – 6.0)
   // real photos cover these spans; skip the 3D draw
-  if (t < 6.0 || (t >= 12.95 && t < 15.0) || (t >= 23.4 && t < 26.2) || (t >= 40.0 && t < 43.5) || t >= 51.0) return;
+  if (t < 6.0 || (t >= 12.95 && t < 15.0) || (t >= 23.4 && t < 26.2) || t >= 40.0) return;
   if (t < 6.0) {
     resetConstruction(); setTimeOfDay(0.32); showExt({ edgesOn: false }); setClip(1e5, 1e5, -1e5); setShadowBox(22);
     const u = span(t, 2.4, 6.0);

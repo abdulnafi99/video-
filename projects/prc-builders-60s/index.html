@@ -132,17 +132,21 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 .photo { position:absolute; inset:0; overflow:hidden; opacity:0; }
 .photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; will-change:transform; }
 .photo .grade { position:absolute; inset:0; }
-#ph-s1 img { object-position:50% 38%; }
-#ph-s2 { clip-path:inset(0 100% 0 0); }
-#ph-s2 img { object-position:50% 55%; }
 #ph-s2-line { position:absolute; top:0; bottom:0; left:0; width:3px; margin-left:-1.5px; background:linear-gradient(180deg, transparent, var(--gold-hi) 15%, var(--gold-hi) 85%, transparent); box-shadow:0 0 30px 6px rgba(230,201,138,.55); opacity:0; }
 #ph-int img { object-position:50% 50%; }
-#ph-kit .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-#ph-kit .card { position:absolute; left:990px; top:210px; width:830px; height:620px; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); }
-#ph-kit .card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-#ph-detail img { object-position:38% 62%; transform-origin:36% 62%; }
 #ph-end img { object-position:50% 45%; filter:sepia(.12) saturate(1.15) contrast(1.05) brightness(1.02); }
 #ph-end .grade { background:linear-gradient(200deg, rgba(255,170,90,.55) 0%, rgba(255,140,60,.25) 45%, rgba(60,30,15,.35) 100%); mix-blend-mode:soft-light; }
+.cards { position:absolute; inset:0; opacity:0; overflow:hidden; }
+.cbg { position:absolute; inset:0; background:radial-gradient(ellipse 70% 70% at 60% 45%, #1c1d21 0%, #0c0d0f 75%); }
+.cbg::after { content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:64px 64px; }
+.card { position:absolute; margin:0; }
+.card .ci { position:absolute; inset:0; overflow:hidden; box-shadow:0 30px 70px rgba(0,0,0,.6); outline:1px solid rgba(255,255,255,.1); }
+.card .ci img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; will-change:transform; }
+.card figcaption { position:absolute; left:0; top:100%; margin-top:18px; font-weight:500; font-size:15px; letter-spacing:.42em; color:var(--gold-hi); display:flex; align-items:center; gap:14px; }
+.card figcaption::before { content:""; width:28px; height:1px; background:var(--gold); }
+#cs-real { clip-path:inset(0 100% 0 0); }
+#cs-wall .ci img { filter:brightness(.55) saturate(.9); }
+#wall-row { position:absolute; inset:0; }
 .photo .shade { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,.22) 100%); }
 </style>
 </head>
@@ -151,13 +155,15 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 
   <canvas id="gl" width="1920" height="1080"></canvas>
 
-  <!-- real PRC project photos -->
-  <div class="photo" id="ph-s1"><img src="./assets/photos/exterior.jpg" alt="" /><div class="shade"></div></div>
-  <div class="photo" id="ph-s2"><img src="./assets/photos/exterior.jpg" alt="" /><div class="shade"></div></div>
-  <div id="ph-s2-line"></div>
+  <!-- real PRC project photos: each photo appears exactly once -->
   <div class="photo" id="ph-int"><img src="./assets/photos/interior.jpg" alt="" /><div class="shade"></div></div>
-  <div class="photo" id="ph-kit"><img class="bg" src="./assets/photos/kitchen-bg.jpg" alt="" /><div class="card"><img src="./assets/photos/kitchen.jpg" alt="" /></div></div>
-  <div class="photo" id="ph-detail"><img src="./assets/photos/exterior.jpg" alt="" /><div class="shade"></div></div>
+  <div class="cards" id="cs-open"><div class="cbg"></div><figure class="card" style="left:290px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/chandan-1.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:750px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/lempor-1.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1210px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/ipoh-1.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure></div>
+  <div class="cards" id="cs-real"><div class="cbg"></div><figure class="card" style="left:1130px;top:300px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/gerik-1.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:1500px;top:300px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/laneh-1.jpg" alt="" /></div><figcaption>LANEH</figcaption></figure></div>
+  <div id="ph-s2-line"></div>
+  <div class="cards" id="cs-int"><div class="cbg"></div><figure class="card" style="left:720px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/../photos/kitchen.jpg" alt="" /></div><figcaption>INTERIOR</figcaption></figure><figure class="card" style="left:1090px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/lempor-6.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1460px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/gerik-4.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure></div>
+  <div class="cards" id="cs-why1"><div class="cbg"></div><figure class="card" style="left:1040px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/gerik-3.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:1440px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/ipoh-3.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure></div>
+  <div class="cards" id="cs-why2"><div class="cbg"></div><figure class="card" style="left:1040px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/chandan-6.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:1440px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/lempor-3.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure></div>
+  <div class="cards" id="cs-wall"><div class="cbg"></div><div class="row" id="wall-row"><figure class="card" style="left:100px;top:250px;width:400px;height:533px"><div class="ci"><img src="./assets/projects/chandan-4.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:540px;top:250px;width:400px;height:533px"><div class="ci"><img src="./assets/projects/gerik-2.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:980px;top:250px;width:400px;height:533px"><div class="ci"><img src="./assets/projects/ipoh-4.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure><figure class="card" style="left:1420px;top:250px;width:400px;height:533px"><div class="ci"><img src="./assets/projects/laneh-4.jpg" alt="" /></div><figcaption>LANEH</figcaption></figure><figure class="card" style="left:1860px;top:250px;width:400px;height:533px"><div class="ci"><img src="./assets/projects/lempor-4.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure></div></div>
   <div class="photo" id="ph-end"><img src="./assets/photos/exterior.jpg" alt="" /><div class="grade"></div></div>
 
   <!-- S1: logo light sweep -->
@@ -330,7 +336,7 @@ window.__renoSplit = function (t) {
     tl.fromTo(id, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 7.6 + i * 1.0);
     tl.to(id + " .tick i", { scale: 1, duration: 0.4, ease: "back.out(2)" }, 8.0 + i * 1.0);
   });
-  tl.to("#plan-list", { opacity: 0, duration: 0.6 }, 12.4);
+  tl.to("#plan-list", { opacity: 0, duration: 0.5 }, 11.0);
   tl.to(["#s2-eb", "#s2-h", "#s2-p"], { opacity: 0, y: -10, duration: 0.5, stagger: 0.06 }, 14.2);
   tl.to("#hud", { opacity: 0, duration: 0.5 }, 14.3);
   tl.set("#s2-scrim", { opacity: 0 }, 15.0);
@@ -417,30 +423,66 @@ window.__renoSplit = function (t) {
   tl.fromTo("#s6-tag", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.0);
   tl.fromTo("#s6-web", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.35);
 
-  // ================= real photos =================
-  // S1b: completed home, slow push-out
-  tl.to("#ph-s1", { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 2.5);
-  tl.fromTo("#ph-s1 img", { scale: 1.14, x: 30 }, { scale: 1.0, x: 0, duration: 3.8, ease: "none" }, 2.4);
-  tl.set("#ph-s1", { opacity: 0 }, 6.0);
-  // S2: gold scan line wipes the 3D design into the real house
-  tl.set("#ph-s2", { opacity: 1 }, 11.4);
-  tl.fromTo("#ph-s2", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power2.inOut" }, 11.5);
+  // ================= real photos (each used once) =================
+  tl.to("#cs-open", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 2.5);
+  tl.fromTo("#cs-open .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.6);
+  tl.fromTo("#cs-open .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.5);
+  tl.fromTo("#cs-open .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.72);
+  tl.fromTo("#cs-open .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.5);
+  tl.fromTo("#cs-open .card:nth-of-type(3)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.84);
+  tl.fromTo("#cs-open .card:nth-of-type(3) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.5);
+  tl.fromTo("#cs-open .card", { x: 0 }, { x: -24, duration: 3.5, ease: "none" }, 2.5);
+  tl.set("#cs-open", { opacity: 0 }, 6.0);
+  tl.set("#cs-real", { opacity: 1 }, 11.4);
+  tl.fromTo("#cs-real .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 11.5);
+  tl.fromTo("#cs-real .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.6, ease: "none" }, 11.4);
+  tl.fromTo("#cs-real .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 11.62);
+  tl.fromTo("#cs-real .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.6, ease: "none" }, 11.4);
+  tl.fromTo("#cs-real .card", { x: 0 }, { x: -24, duration: 3.6, ease: "none" }, 11.4);
+  tl.set("#cs-real", { opacity: 0 }, 15.0);
+  tl.fromTo("#cs-real", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power2.inOut" }, 11.5);
   tl.set("#ph-s2-line", { opacity: 1 }, 11.5);
   tl.fromTo("#ph-s2-line", { x: 0 }, { x: 1920, duration: 1.5, ease: "power2.inOut" }, 11.5);
   tl.set("#ph-s2-line", { opacity: 0 }, 13.0);
-  tl.fromTo("#ph-s2 img", { scale: 1.04 }, { scale: 1.12, duration: 3.6, ease: "none" }, 11.4);
-  tl.set("#ph-s2", { opacity: 0 }, 15.0);
-  // Interior Works: bedroom, then kitchen
   tl.set("#ph-int", { opacity: 1 }, 23.4);
   tl.fromTo("#ph-int img", { scale: 1.0, x: 0 }, { scale: 1.08, x: -40, duration: 1.8, ease: "none" }, 23.4);
-  tl.to("#ph-kit", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 24.75);
-  tl.fromTo("#ph-kit .card", { y: 30, scale: 0.98 }, { y: 0, scale: 1, duration: 1.4, ease: "power2.out" }, 24.75);
-  tl.fromTo("#ph-kit .card img", { scale: 1.06 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
-  tl.set(["#ph-int", "#ph-kit"], { opacity: 0 }, 26.2);
-  // Why PRC: brick and glass-block craftsmanship detail
-  tl.set("#ph-detail", { opacity: 1 }, 40.0);
-  tl.fromTo("#ph-detail img", { scale: 1.32 }, { scale: 1.5, duration: 3.5, ease: "none" }, 40.0);
-  tl.set("#ph-detail", { opacity: 0 }, 43.5);
+  tl.set("#ph-int", { opacity: 0 }, 26.2);
+  tl.to("#cs-int", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 24.75);
+  tl.fromTo("#cs-int .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 24.85);
+  tl.fromTo("#cs-int .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
+  tl.fromTo("#cs-int .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 24.95);
+  tl.fromTo("#cs-int .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
+  tl.fromTo("#cs-int .card:nth-of-type(3)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 25.05);
+  tl.fromTo("#cs-int .card:nth-of-type(3) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
+  tl.fromTo("#cs-int .card", { x: 0 }, { x: -24, duration: 1.45, ease: "none" }, 24.75);
+  tl.set("#cs-int", { opacity: 0 }, 26.2);
+  tl.set("#cs-why1", { opacity: 1 }, 40.0);
+  tl.fromTo("#cs-why1 .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 40.1);
+  tl.fromTo("#cs-why1 .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 40.0);
+  tl.fromTo("#cs-why1 .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 40.22);
+  tl.fromTo("#cs-why1 .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 40.0);
+  tl.fromTo("#cs-why1 .card", { x: 0 }, { x: -24, duration: 3.5, ease: "none" }, 40.0);
+  tl.set("#cs-why1", { opacity: 0 }, 43.5);
+  tl.set("#cs-why2", { opacity: 1 }, 43.5);
+  tl.fromTo("#cs-why2 .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 43.6);
+  tl.fromTo("#cs-why2 .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 4.5, ease: "none" }, 43.5);
+  tl.fromTo("#cs-why2 .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 43.72);
+  tl.fromTo("#cs-why2 .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 4.5, ease: "none" }, 43.5);
+  tl.fromTo("#cs-why2 .card", { x: 0 }, { x: -24, duration: 4.5, ease: "none" }, 43.5);
+  tl.set("#cs-why2", { opacity: 0 }, 48.0);
+  tl.set("#cs-wall", { opacity: 1 }, 48.0);
+  tl.fromTo("#cs-wall .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.1);
+  tl.fromTo("#cs-wall .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
+  tl.fromTo("#cs-wall .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.18);
+  tl.fromTo("#cs-wall .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
+  tl.fromTo("#cs-wall .card:nth-of-type(3)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.26);
+  tl.fromTo("#cs-wall .card:nth-of-type(3) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
+  tl.fromTo("#cs-wall .card:nth-of-type(4)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.34);
+  tl.fromTo("#cs-wall .card:nth-of-type(4) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
+  tl.fromTo("#cs-wall .card:nth-of-type(5)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.42);
+  tl.fromTo("#cs-wall .card:nth-of-type(5) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
+  tl.set("#cs-wall", { opacity: 0 }, 51.0);
+  tl.fromTo("#wall-row", { x: 0 }, { x: -320, duration: 3.0, ease: "none" }, 48.0);
   // Closing: the finished home in a warm golden grade, camera pulling away
   tl.set("#ph-end", { opacity: 1 }, 51.0);
   tl.fromTo("#ph-end img", { scale: 1.2, y: -20 }, { scale: 1.0, y: 0, duration: 9, ease: "power1.out" }, 51.0);
