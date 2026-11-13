@@ -6,3 +6,5 @@ data/
 .remotion/
 remotion-bundle/
 server/scripts/_scratch/
+productions/*/out/
+productions/*/vo/
