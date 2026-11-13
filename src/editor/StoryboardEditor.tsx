@@ -69,7 +69,7 @@ export const StoryboardEditor: React.FC<{
               <div className="field"><label>Supporting text / eyebrow</label><input className="input" value={s.subline} onChange={(e) => set(i, { subline: e.target.value })} /></div>
               {meta?.usesBullets && (
                 <div className="field" style={{ gridColumn: "1 / -1" }}>
-                  <label>{s.template === "final-cta" ? "Button label" : s.template === "house-build-3d" ? "Build phases (one per line)" : "Feature points (one per line, max 4)"}</label>
+                  <label>{s.template === "final-cta" ? "Button label" : s.template === "house-build-3d" ? "Build phases (one per line)" : "Feature points (one per line, max 6)"}</label>
                   <textarea className="textarea" style={{ minHeight: 70 }} value={s.bullets.join("\n")} onChange={(e) => set(i, { bullets: e.target.value.split("\n") })} />
                 </div>
               )}

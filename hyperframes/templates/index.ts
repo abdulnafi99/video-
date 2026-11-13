@@ -25,7 +25,7 @@ export const TEMPLATE_META: TemplateMeta[] = [
   { id: "cinematic-intro", label: "Cinematic Intro", description: "A beam of light opens the frame and the headline rises out of it.", defaultDuration: 4, usesMedia: false, usesBullets: false },
   { id: "logo-reveal", label: "Logo Reveal", description: "Arcs draw in, the mark resolves from blur and a light sweep crosses the logo.", defaultDuration: 4, usesMedia: false, usesBullets: false, variants: [{ id: "light", label: "Light stage" }, { id: "dark", label: "Dark stage" }] },
   { id: "product-showcase", label: "Product Showcase", description: "Full-bleed hero image or video with a slow Ken Burns move.", defaultDuration: 5, usesMedia: true, usesBullets: false },
-  { id: "feature-showcase", label: "Feature Showcase", description: "Headline and up to four glass feature cards revealed in sequence.", defaultDuration: 5, usesMedia: true, usesBullets: true },
+  { id: "feature-showcase", label: "Feature Showcase", description: "Headline and up to six glass feature cards revealed in sequence.", defaultDuration: 5, usesMedia: true, usesBullets: true },
   { id: "ui-demonstration", label: "UI Demonstration", description: "Device mockup with a screenshot that scrolls like a live demo.", defaultDuration: 5, usesMedia: true, usesBullets: false },
   { id: "floating-product", label: "Floating Product", description: "Product floating in space with a soft shadow and particles.", defaultDuration: 5, usesMedia: true, usesBullets: false },
   { id: "typography-statement", label: "Typography Statement", description: "Big statement lines rising from masks. Separate lines with |.", defaultDuration: 4, usesMedia: false, usesBullets: false },

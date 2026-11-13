@@ -11,6 +11,9 @@ import { generateStoryboard } from "../services/storyboard";
 import { compileSceneToDir, previewHtml } from "../services/hyperframesCompiler";
 import { assertId, projectDir, safeJoin } from "../services/paths";
 import { enqueue } from "../jobs/queue";
+import { buildProjectVoiceOver, ttsAvailable } from "../services/tts";
+import { ingestFile } from "../services/media";
+import { TMP_DIR } from "../services/paths";
 
 export const projects = Router();
 
@@ -54,6 +57,21 @@ projects.post("/:id/duplicate", (req, res) => {
 projects.post("/:id/storyboard", (req, res) => {
   const p = load(req.params.id);
   res.json(updateProject(p, { scenes: generateStoryboard(p, { includeBuild3d: Boolean(req.body?.includeBuild3d) }) }));
+});
+
+/** Generate one voice-over track from every scene's script (offline TTS) and assign it. */
+projects.post("/:id/voiceover", async (req, res) => {
+  const p = load(req.params.id);
+  if (!(await ttsAvailable())) return res.status(501).json({ error: "Offline TTS (espeak-ng) is not installed on the server" });
+  const tmp = path.join(TMP_DIR, `vo-${p.id}-${Date.now()}.m4a`);
+  const { placed } = await buildProjectVoiceOver(p, tmp);
+  const asset = await ingestFile({
+    tempPath: tmp, originalName: `Voice-over ${p.language === "ms" ? "BM" : "EN"} (generated).m4a`, projectId: p.id, role: "voice-over",
+    license: "Synthetic voice generated offline (espeak-ng / MBROLA)",
+  });
+  const music = p.audio.music ? { ...p.audio.music, volume: Math.min(p.audio.music.volume, 0.45) } : undefined;
+  const updated = updateProject(p, { audio: { ...p.audio, music, voiceOver: { mediaId: asset.id, volume: 1, fadeIn: 0.05, fadeOut: 0.3, startAt: 0 } } });
+  res.json({ project: updated, asset, placed });
 });
 
 projects.post("/:id/render", (req, res) => {

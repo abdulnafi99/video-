@@ -89,6 +89,15 @@ export const AudioStudio: React.FC<{ projectId?: string }> = ({ projectId }) => 
             <div><div style={{ fontWeight: 600 }}>Licensing</div><div className="muted small">Use only music you own or have licensed. The generator below creates original, royalty-free beds and effects; it never reproduces existing songs.</div></div>
             <div className="row">
               <button className="btn" disabled={Boolean(busy)} onClick={() => generate("ambient")}><Icon name="sparkle" size={15} /> {busy === "ambient" ? "Composing…" : "Generate original music bed"}</button>
+              <button className="btn" disabled={Boolean(busy)} onClick={async () => {
+                setBusy("vo");
+                try {
+                  const r = await api.generateVoiceOver(project.id);
+                  setProject(r.project); setAudio(r.project.audio); await loadMedia();
+                  const over = r.placed.filter((x) => x.overrun > 0.05);
+                  toast(over.length ? `Voice-over generated: ${over.length} line(s) run past their scene, so lengthen those scenes` : "Voice-over generated from scene scripts");
+                } catch (e) { toast((e as Error).message, true); } finally { setBusy(""); }
+              }}><Icon name="audio" size={15} /> {busy === "vo" ? "Speaking…" : "Generate voice-over from scripts"}</button>
               <button className="btn" disabled={Boolean(busy)} onClick={() => generate("whoosh")}>{busy === "whoosh" ? "…" : "Generate whoosh SFX"}</button>
               <button className="btn" onClick={() => upRef.current?.click()}><Icon name="upload" size={15} /> Upload audio</button>
               <input ref={upRef} type="file" hidden accept=".mp3,.wav,.m4a,.aac" multiple onChange={(e) => upload(e.target.files)} />

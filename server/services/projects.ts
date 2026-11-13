@@ -32,7 +32,7 @@ export function cleanScene(s: Partial<Scene>, order: number): Scene {
     duration: Math.round(num(s.duration, 1.5, 30, 4) * 10) / 10,
     headline: cleanText(s.headline, 140),
     subline: cleanText(s.subline, 220),
-    bullets: (Array.isArray(s.bullets) ? s.bullets : []).slice(0, 5).map((b) => cleanText(b, 80)).filter(Boolean),
+    bullets: (Array.isArray(s.bullets) ? s.bullets : []).slice(0, 6).map((b) => cleanText(b, 80)).filter(Boolean),
     visualDescription: cleanText(s.visualDescription, 400),
     cameraMovement: cleanText(s.cameraMovement, 120),
     animationDirection: cleanText(s.animationDirection, 300),

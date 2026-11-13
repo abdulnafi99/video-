@@ -32,6 +32,7 @@ export const api = {
   generateStoryboard: (id: string, includeBuild3d: boolean) =>
     req<Project>(`/api/projects/${id}/storyboard`, { method: "POST", body: JSON.stringify({ includeBuild3d }) }),
   previewProps: (id: string) => req<{ props: MainCompositionProps; renderedScenes: number }>(`/api/projects/${id}/preview-props`),
+  generateVoiceOver: (id: string) => req<{ project: Project; asset: MediaAsset; placed: { sceneId: string; start: number; end: number; overrun: number }[] }>(`/api/projects/${id}/voiceover`, { method: "POST", body: "{}" }),
   render: (id: string, opts: { fps: number; quality: string }) => req<RenderJob>(`/api/projects/${id}/render`, { method: "POST", body: JSON.stringify(opts) }),
   renderScene: (id: string, sceneId: string) => req<RenderJob>(`/api/projects/${id}/scenes/${sceneId}/render`, { method: "POST", body: "{}" }),
   templates: () => req<TemplateMeta[]>("/api/templates"),
