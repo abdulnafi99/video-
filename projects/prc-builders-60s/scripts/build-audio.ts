@@ -147,6 +147,76 @@ function buildMusic() {
     }
   };
 
+  // ---- motion sound design: short, quiet cues locked to each on-screen move ----
+  const pan = (v: number, p: number, s: number) => { L[s] += v * (1 - p * 0.6); R[s] += v * (1 + p * 0.6); };
+  // soft UI tick (text reveals, list rows)
+  const tick = (t: number, gain = 0.09, p = 0) => {
+    const s0 = Math.floor(t * SR);
+    let seed = s0 + 91;
+    for (let s = s0; s < Math.min(N, s0 + SR * 0.09); s++) {
+      const x = (s - s0) / SR;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      const n = (seed / 4294967296) * 2 - 1;
+      pan((Math.sin(2 * Math.PI * 2200 * x) * 0.6 + n * 0.25) * Math.exp(-x * 70) * gain, p, s);
+    }
+  };
+  // airy swish (photo cards sliding in)
+  const sw = synthWhoosh(0.42);
+  const swish = (t: number, gain = 0.16, p = 0) => {
+    const s0 = Math.floor((t - 0.12) * SR);
+    for (let i = 0; i < sw.L.length; i++) { const s = s0 + i; if (s >= 0 && s < N) pan((sw.L[i] + sw.R[i]) * 0.5 * gain, p, s); }
+  };
+  // glassy bell ping (process steps), rising pitch
+  const ping = (t: number, f: number, gain = 0.12) => {
+    const s0 = Math.floor(t * SR);
+    for (let s = s0; s < Math.min(N, s0 + SR * 1.6); s++) {
+      const x = (s - s0) / SR;
+      const v = (Math.sin(2 * Math.PI * f * x) + 0.35 * Math.sin(2 * Math.PI * f * 2.01 * x) * Math.exp(-x * 3) + 0.15 * Math.sin(2 * Math.PI * f * 3.02 * x) * Math.exp(-x * 6)) * Math.exp(-x * 2.6) * Math.min(1, x / 0.003) * gain;
+      L[s] += v; R[s] += v;
+    }
+  };
+  // bright shimmer sweep (logo light sweeps)
+  const shimmer = (t: number, len: number, gain = 0.05) => {
+    const s0 = Math.floor(t * SR);
+    [2093, 2637, 3136, 4186].forEach((f, k) => {
+      const d = k * 0.12;
+      for (let s = s0 + Math.floor(d * SR); s < Math.min(N, s0 + Math.floor((len + 1.2) * SR)); s++) {
+        const x = (s - s0) / SR - d;
+        const env = Math.min(1, x / 0.05) * Math.exp(-x * 1.8);
+        const v = Math.sin(2 * Math.PI * f * x + Math.sin(x * 9) * 0.6) * env * gain;
+        L[s] += v * (1 - k * 0.2); R[s] += v * (0.4 + k * 0.2);
+      }
+    });
+  };
+  const cardPan = (x: number, w: number) => ((x + w / 2) / 1920) * 2 - 1;
+  const cards = (t0: number, xs: number[], w: number, step = 0.12) => xs.forEach((x, k) => swish(t0 + 0.1 + k * step, 0.15, cardPan(x, w)));
+
+  // S1 intro + opening cards + headline
+  shimmer(0.3, 1.9, 0.05); placeWhoosh(1.3, 0.1); tick(1.3, 0.06);
+  cards(2.5, [290, 750, 1210], 420);
+  tick(3.3, 0.08, -0.5); tick(3.9, 0.08, -0.5); placeWhoosh(5.5, 0.08);
+  // S2 blueprint scan, planning checklist, sweep into the real house
+  riser(9.4, 3.0, 0.1);
+  [8.0, 9.0, 10.0].forEach((t) => tick(t, 0.08, 0.6));
+  tick(6.95, 0.07, -0.5); placeWhoosh(9.9, 0.14); placeWhoosh(12.2, 0.16);
+  cards(11.4, [1130, 1500], 340);
+  // S3 services: title ticks, renovation wipe, interior cards, schedule bars
+  [15.4, 18.2, 21.0, 23.8, 26.6].forEach((t) => tick(t, 0.08, -0.6));
+  tick(15.55, 0.06, -0.6); placeWhoosh(21.95, 0.14);
+  cards(24.75, [720, 1090, 1460], 340, 0.1);
+  [26.9, 27.2, 27.5, 27.8].forEach((t, i) => tick(t, 0.07, 0.2 + i * 0.15));
+  // S4 process: track draw + one rising ping per step
+  placeWhoosh(30.9, 0.12); tick(29.55, 0.07);
+  [32.4, 33.65, 34.9, 36.15, 37.4, 38.65].forEach((t, i) => ping(t, [880, 988, 1109, 1175, 1319, 1480][i], 0.11));
+  // S5 why PRC: keyword ticks, photo cards, project wall, tagline
+  [40.2, 42.4, 44.2, 46.3].forEach((t) => tick(t, 0.09, -0.6));
+  cards(40.0, [1040, 1440], 360); cards(43.5, [1040, 1440], 360);
+  placeWhoosh(49.4, 0.12); cards(48.0, [100, 540, 980, 1420, 1860], 400, 0.08);
+  hit(48.2, 0.18); hit(49.95, 0.2);
+  // S6 closing: logo shimmer + detail ticks
+  shimmer(54.9, 1.5, 0.06);
+  tick(55.95, 0.08); [56.7, 57.0, 57.35].forEach((t) => tick(t, 0.06));
+
   hit(0.35, 0.55);            // logo light sweep
   riser(6.0, 1.6, 0.25); hit(6.0, 0.35);
   riser(15.0, 1.6, 0.25); hit(15.0, 0.4);
@@ -180,13 +250,26 @@ function buildMix() {
     "-map", "[o]", "-ac", "2", "-c:a", "pcm_s16le", path.join(OUT, "mix.wav")]);
 }
 
+/** Music and motion sound design only, no voice-over. */
+function buildMusicOnlyMix() {
+  sh("ffmpeg", ["-y", "-v", "error", "-i", path.join(OUT, "music.wav"), "-af",
+    "atrim=0:60,loudnorm=I=-14:TP=-1.0:LRA=9,aresample=48000", "-ac", "2", "-c:a", "pcm_s16le", path.join(OUT, "mix.wav")]);
+}
+
+// --no-vo: music + motion sound effects only (current cut)
 // --mix-only: keep music.wav and vo.wav; --keep-vo: rebuild music but keep vo.wav (e.g. a recorded take)
+const noVo = process.argv.includes("--no-vo");
 const mixOnly = process.argv.includes("--mix-only");
 const keepVo = process.argv.includes("--keep-vo");
-if (!mixOnly) {
-  if (!keepVo) buildVO();
+if (noVo) {
   buildMusic();
+  buildMusicOnlyMix();
+} else {
+  if (!mixOnly) {
+    if (!keepVo) buildVO();
+    buildMusic();
+  }
+  buildMix();
 }
-buildMix();
 fs.rmSync(TMP, { recursive: true, force: true });
 console.log("audio →", OUT, ["music.wav", "vo.wav", "mix.wav"].map((f) => `${f} ${dur(path.join(OUT, f)).toFixed(2)}s`).join(", "));

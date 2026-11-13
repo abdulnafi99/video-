@@ -33,7 +33,17 @@ npx hyperframes snapshot projects/prc-builders-60s --at 4.5,11,22.5,36,58.5
 npx hyperframes render projects/prc-builders-60s -o projects/prc-builders-60s/renders/raw.mp4 --quality delivery
 ```
 
-## Voice-over
+## Sound
+
+The current cut uses **music and motion sound design only, with no voice-over**. Each cue is locked to an
+on-screen move: a shimmer on the logo sweeps, swishes as photo cards slide in, ticks on text and list reveals,
+a rising bell ping on each process step, low hits and risers on chapter changes. Rebuild it with:
+
+```bash
+npx tsx projects/prc-builders-60s/scripts/build-audio.ts --no-vo
+```
+
+## Voice-over (optional)
 
 `vo.wav` is an offline synthetic guide voice (espeak-ng with the MBROLA `ma1` Malay voice). It sets the timing,
 but it does not sound like a broadcast voice. For the final ad, have a professional Malay voice talent record
