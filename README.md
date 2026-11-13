@@ -101,13 +101,12 @@ Sdn Bhd / TikTok @tinyhouseperak: cinematic intro → 3D tiny-house construction
 features → finished house at dusk → statement → PRC logo reveal → call to action. Copy is
 in `server/scripts/prc-project.ts` and fully editable in the Storyboard editor.
 
-### PRC Group: full 60s promo with Malay voice-over
+### PRC Group: full promo (website content)
 
-`npx tsx server/scripts/seed-prc-full.ts` creates the extended version with the PRC website
-content (core services, what we build, why PRC, quality commitments) and a Bahasa Melayu
-voice-over. Scene durations are fitted automatically to each spoken line.
+`npx tsx server/scripts/seed-prc-full.ts` creates the extended ~50s version with the PRC
+website content (core services, what we build, why PRC, quality commitments), using music
+only. Feature scenes use the "list", "grid" and "checks" variants, with self-drawing line
+icons (`hyperframes/templates/icons.ts`).
 
-Voice-over is synthesised **offline** (`server/services/tts.ts`, espeak-ng + MBROLA `ma1`
-Malay voice; `apt-get install espeak-ng mbrola mbrola-ma1`). It is also available in the
-Audio Studio ("Generate voice-over from scripts"). It is a synthetic voice: for broadcast
-quality, upload a recorded voice-over in Audio Studio and it replaces the generated track.
+Optional: an offline voice-over generator (`server/services/tts.ts`, espeak-ng + MBROLA
+`ma1` Malay voice) is available in Audio Studio → "Generate voice-over from scripts".
