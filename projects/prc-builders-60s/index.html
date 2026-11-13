@@ -31,6 +31,9 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 #vignette { background:radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); pointer-events:none; }
 #grain { opacity:.05; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); background-size:300px 300px; mix-blend-mode:overlay; }
 #dip { background:#000; opacity:0; }
+#wipe { position:absolute; top:0; left:0; width:1920px; height:1080px; background:#0e0f11; transform:translateX(-2000px); }
+#wipe::before, #wipe::after { content:""; position:absolute; top:0; bottom:0; width:6px; background:linear-gradient(180deg, var(--gold), var(--gold-hi), var(--gold)); box-shadow:0 0 30px rgba(230,201,138,.7); }
+#wipe::before { right:-6px; } #wipe::after { left:-6px; }
 
 /* S1 logo */
 #intro { display:flex; flex-direction:column; align-items:center; justify-content:center; }
@@ -44,7 +47,8 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 #sweep { background:linear-gradient(105deg, transparent 42%, rgba(255,236,200,.10) 50%, transparent 58%); background-size:300% 100%; background-position:var(--s, 100%) 0; }
 
 /* S1b */
-#s1b { left:140px; bottom:150px; top:auto; right:auto; }
+#s1b { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#s1b-rule { width:520px; height:1px; margin:34px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); transform:scaleX(0); }
 #s1b .big { font-weight:600; font-size:92px; line-height:1.04; letter-spacing:.01em; }
 .scrim-b { background:linear-gradient(0deg, rgba(5,6,8,.72) 0%, rgba(5,6,8,0) 52%); }
 .scrim-l { background:linear-gradient(90deg, rgba(5,8,14,.82) 0%, rgba(5,8,14,.45) 38%, rgba(5,8,14,0) 62%); }
@@ -144,7 +148,7 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 .card .ci img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; will-change:transform; }
 .card figcaption { position:absolute; left:0; top:100%; margin-top:18px; font-weight:500; font-size:15px; letter-spacing:.42em; color:var(--gold-hi); display:flex; align-items:center; gap:14px; }
 .card figcaption::before { content:""; width:28px; height:1px; background:var(--gold); }
-#cs-real { clip-path:inset(0 100% 0 0); }
+#cs-open { clip-path:inset(0 100% 0 0); }
 #cs-wall .ci img { filter:brightness(.55) saturate(.9); }
 #cs-build .bgimg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 #wall-row { position:absolute; inset:0; }
@@ -158,8 +162,8 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 
   <!-- real PRC project photos: each photo appears exactly once -->
   <div class="photo" id="ph-int"><img src="./assets/photos/interior.jpg" alt="" /><div class="shade"></div></div>
-  <div class="cards" id="cs-open"><div class="cbg"></div><figure class="card" style="left:290px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/chandan-1.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:750px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/lempor-1.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1210px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/ipoh-1.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure></div>
-  <div class="cards" id="cs-real"><div class="cbg"></div><figure class="card" style="left:1130px;top:300px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/gerik-1.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:1500px;top:300px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/laneh-1.jpg" alt="" /></div><figcaption>LANEH</figcaption></figure></div>
+  <div class="cards" id="cs-open"><div class="cbg"></div><figure class="card" style="left:700px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/chandan-1.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:1090px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/lempor-1.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1480px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/ipoh-1.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure></div>
+  <div class="cards" id="cs-real"><div class="cbg"></div><figure class="card" style="left:1060px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/gerik-1.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:1460px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/laneh-1.jpg" alt="" /></div><figcaption>LANEH</figcaption></figure></div>
   <div id="ph-s2-line"></div>
   <div class="cards" id="cs-build"><img class="bgimg" src="./assets/photos/construction-bg.jpg" alt="" /><figure class="card" style="left:1180px;top:170px;width:540px;height:720px"><div class="ci"><img src="./assets/photos/construction.jpg" alt="" /></div><figcaption>ON SITE</figcaption></figure></div>
   <div class="cards" id="cs-int"><div class="cbg"></div><figure class="card" style="left:720px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/../photos/kitchen.jpg" alt="" /></div><figcaption>INTERIOR</figcaption></figure><figure class="card" style="left:1090px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/lempor-6.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1460px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/gerik-4.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure></div>
@@ -181,6 +185,7 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
   <div class="layer" id="s1b">
     <span class="mask big"><span id="s1b-a">BUILDING HOMES.</span></span>
     <span class="mask big"><span id="s1b-b" class="gold">CREATING LASTING VALUE.</span></span>
+    <div id="s1b-rule"></div>
   </div>
 
   <!-- S2 -->
@@ -231,15 +236,20 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
   <div id="reno" class="layer" style="opacity:0">
     <div id="reno-line"><span class="reno-tag" id="tag-before">BEFORE</span><span class="reno-tag" id="tag-after">AFTER</span></div>
   </div>
+  <div class="layer" id="wbh" style="left:140px;top:96px;right:auto;bottom:auto">
+    <div class="eyebrow" id="wb-eb">WHAT WE BUILD</div>
+    <h2 style="margin-top:20px;font-weight:600;font-size:52px;letter-spacing:-.005em"><span class="mask"><span id="wb-h">Homes Designed Around Modern Living.</span></span></h2>
+    <p id="wb-p" style="margin-top:18px;font-weight:300;font-size:26px;color:var(--mute);max-width:520px">Completed PRC residential projects.</p>
+  </div>
   <div class="layer" id="s3h">
     <div class="eyebrow" id="s3-eb">FROM DESIGN TO COMPLETION</div>
     <h2><span class="mask"><span id="s3-h">Complete Residential Solutions.</span></span></h2>
   </div>
-  <div class="svc" id="svc1"><div class="num">01</div><div class="ttl">Design &amp; Build</div></div>
-  <div class="svc" id="svc2"><div class="num">02</div><div class="ttl">New House Construction</div></div>
-  <div class="svc" id="svc3"><div class="num">03</div><div class="ttl">Renovation &amp; Extension</div></div>
-  <div class="svc" id="svc4"><div class="num">04</div><div class="ttl">Interior Works</div></div>
-  <div class="svc" id="svc5"><div class="num">05</div><div class="ttl">Consultation &amp; Project Management</div></div>
+  <div class="svc" id="svc1"><div class="num">01</div><div class="ttl">Consultation &amp; Project Management</div></div>
+  <div class="svc" id="svc2"><div class="num">02</div><div class="ttl">Design &amp; Build</div></div>
+  <div class="svc" id="svc3"><div class="num">03</div><div class="ttl">New House Construction</div></div>
+  <div class="svc" id="svc4"><div class="num">04</div><div class="ttl">Renovation &amp; Extension</div></div>
+  <div class="svc" id="svc5"><div class="num">05</div><div class="ttl">Interior Works</div></div>
   <div id="svc-ticks" style="opacity:0"><b><i id="tk1"></i></b><b><i id="tk2"></i></b><b><i id="tk3"></i></b><b><i id="tk4"></i></b><b><i id="tk5"></i></b></div>
 
   <!-- S4: process -->
@@ -287,213 +297,176 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
   <div class="layer" id="vignette"></div>
   <div class="layer" id="grain"></div>
   <div class="layer" id="dip"></div>
+  <div id="wipe"></div>
 
   <audio id="soundtrack" src="./assets/audio/mix.wav" data-start="0" data-duration="60" data-volume="1"></audio>
 </div>
 
 <script>
+// Chronological cut: intro → who we are → 01 consult → 02 design → 03 build → completed homes →
+// 04 renovation → 05 interior → process → why PRC → closing.
 // Split position (fraction of frame width) for the renovation before/after wipe; shared with world.js.
 window.__renoSplit = function (t) {
-  var x = Math.min(1, Math.max(0, (t - 21.0) / 1.9));
+  var x = Math.min(1, Math.max(0, (t - 29.4) / 1.9));
   var e = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; // = GSAP power2.inOut
   return 0.88 - 0.5 * e;
 };
 (function () {
   var tl = gsap.timeline({ paused: true });
   var E = "power3.out", EI = "power2.inOut";
+  function show(sel, at) { tl.set(sel, { opacity: 1 }, at); }
+  function hide(sel, at) { tl.set(sel, { opacity: 0 }, at); }
+  function mask(sel, at, d) { tl.fromTo(sel, { yPercent: 105 }, { yPercent: 0, duration: d || 0.9, ease: E }, at); }
+  function slideIn(sel, at) { tl.fromTo(sel, { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, at); }
+  function rise(sel, at) { tl.fromTo(sel, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, at); }
 
-  // ---------- grade: film grain drift (stepped, deterministic)
+  // grade: film grain drift
   tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "9000px 5400px", duration: 60, ease: "steps(1800)" }, 0);
 
-  // ---------- dips to black between chapters (cut happens at the boundary)
-  function dip(at, inD, outD) { tl.to("#dip", { opacity: 1, duration: inD, ease: "power1.in" }, at - inD); tl.to("#dip", { opacity: 0, duration: outD, ease: "power1.out" }, at); }
-  [6.0, 15.0, 29.0, 40.0, 51.0].forEach(function (t) { dip(t, 0.35, 0.5); });
-  [17.8, 20.6, 23.4, 26.2, 43.5, 48.0].forEach(function (t) { dip(t, 0.2, 0.3); });
+  // chapter transitions: a charcoal panel with gold edges sweeps across; the cut happens under it
+  function wipe(T) {
+    tl.fromTo("#wipe", { x: -1990 }, { x: 0, duration: 0.34, ease: "power2.in", immediateRender: false }, T - 0.34);
+    tl.to("#wipe", { x: 1990, duration: 0.42, ease: "power2.out" }, T);
+  }
+  [5.0, 10.5, 14.0, 18.0, 29.0, 32.0, 36.0, 44.0, 51.0].forEach(wipe);
 
-  // ---------- 3D canvas visibility
-  tl.set("#gl", { opacity: 0 }, 0);
-  tl.set("#gl", { opacity: 1 }, 6.0);
-  tl.set("#gl", { opacity: 0 }, 26.2);
-  tl.set("#gl", { opacity: 1 }, 40.0);
+  // 3D canvas visibility (world.js draws only where it is needed)
+  tl.set("#gl", { opacity: 0 }, 0); show("#gl", 5.0);
 
-  // ================= S1 (0 – 6) =================
-  tl.fromTo("#intro-logo", { "--m": "100%", "--s": "100%", scale: 0.96 }, { "--m": "0%", "--s": "0%", scale: 1, duration: 1.9, ease: "power2.inOut" }, 0.25);
-  tl.fromTo("#sweep", { "--s": "100%" }, { "--s": "0%", duration: 1.9, ease: "power2.inOut" }, 0.25);
-  tl.fromTo("#intro-word", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 1.2, ease: E }, 1.25);
+  // ===== 0 – 5  INTRO =====
+  tl.fromTo("#intro-logo", { "--m": "100%", "--s": "100%", scale: 0.94 }, { "--m": "0%", "--s": "0%", scale: 1, duration: 1.9, ease: EI }, 0.25);
+  tl.fromTo("#sweep", { "--s": "100%" }, { "--s": "0%", duration: 1.9, ease: EI }, 0.25);
+  rise("#intro-word", 1.25);
   tl.fromTo("#intro-line", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: EI }, 1.45);
-  tl.to("#intro", { opacity: 0, scale: 1.04, duration: 0.8, ease: "power2.in" }, 2.45);
-  tl.to("#s1b-scrim", { opacity: 1, duration: 1 }, 3.0);
-  tl.fromTo("#s1b-a", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 3.25);
-  tl.fromTo("#s1b-b", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 3.85);
-  tl.to(["#s1b-a", "#s1b-b"], { yPercent: -105, duration: 0.5, ease: "power2.in", stagger: 0.08 }, 5.25);
-  tl.set("#s1b-scrim", { opacity: 0 }, 6.0);
+  tl.to("#intro", { opacity: 0, scale: 1.05, duration: 0.6, ease: "power2.in" }, 2.45);
+  mask("#s1b-a", 2.95); mask("#s1b-b", 3.35);
+  tl.fromTo("#s1b-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: EI }, 3.7);
+  hide("#s1b", 5.0);
 
-  // ================= S2 (6 – 15) =================
-  tl.set("#s2-scrim", { opacity: 1 }, 6.0);
-  tl.to("#hud", { opacity: 1, duration: 0.8 }, 6.3);
-  tl.fromTo("#s2-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.8, ease: E }, 6.6);
-  tl.fromTo("#s2-h", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: E }, 6.9);
-  tl.fromTo("#s2-p", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9, ease: E }, 7.5);
+  // ===== 5 – 10.5  WHO WE ARE (blueprint drawing itself) =====
+  show("#s2-scrim", 5.0); tl.to("#hud", { opacity: 1, duration: 0.6 }, 5.1);
+  slideIn("#s2-eb", 5.3); mask("#s2-h", 5.5, 1.0); rise("#s2-p", 6.0);
   ["#pl1", "#pl2", "#pl3"].forEach(function (id, i) {
-    tl.fromTo(id, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 7.6 + i * 1.0);
-    tl.to(id + " .tick i", { scale: 1, duration: 0.4, ease: "back.out(2)" }, 8.0 + i * 1.0);
+    tl.fromTo(id, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 6.4 + i * 0.8);
+    tl.to(id + " .tick i", { scale: 1, duration: 0.4, ease: "back.out(2)" }, 6.8 + i * 0.8);
   });
-  tl.to("#plan-list", { opacity: 0, duration: 0.5 }, 11.0);
-  tl.to(["#s2-eb", "#s2-h", "#s2-p"], { opacity: 0, y: -10, duration: 0.5, stagger: 0.06 }, 14.2);
-  tl.to("#hud", { opacity: 0, duration: 0.5 }, 14.3);
-  tl.set("#s2-scrim", { opacity: 0 }, 15.0);
+  hide(["#s2", "#hud", "#s2-scrim"], 10.5);
 
-  // ================= S3 (15 – 29) =================
-  tl.set(["#s3-scrim", "#s3-scrim-b"], { opacity: 1 }, 15.0);
-  tl.fromTo("#s3-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.8, ease: E }, 15.3);
-  tl.fromTo("#s3-h", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 15.5);
-  tl.to("#svc-ticks", { opacity: 1, duration: 0.5 }, 15.4);
-  [15.0, 17.8, 20.6, 23.4, 26.2].forEach(function (t0, i) {
-    var id = "#svc" + (i + 1);
-    tl.fromTo(id + " .num", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, t0 + 0.3);
-    tl.fromTo(id + " .ttl", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, t0 + 0.4);
-    tl.to("#tk" + (i + 1), { scaleX: 1, duration: 2.5, ease: "none" }, t0 + 0.2);
-    if (i < 4) tl.to([id + " .num", id + " .ttl"], { opacity: 0, duration: 0.25 }, t0 + 2.5);
-  });
+  // ===== services header + chapter labels =====
+  var svcT = [[10.5, 14.0], [14.0, 18.0], [18.0, 23.0], [29.0, 32.0], [32.0, 36.0]];
+  show(["#s3-scrim", "#s3-scrim-b"], 10.5);
+  slideIn("#s3-eb", 10.7); mask("#s3-h", 10.85);
+  tl.set(["#s3h", "#s3-scrim", "#s3-scrim-b", "#svc-ticks"], { opacity: 0 }, 23.0);
+  tl.set(["#s3h", "#s3-scrim", "#s3-scrim-b", "#svc-ticks"], { opacity: 1 }, 29.0);
+  tl.set(["#s3h", "#s3-scrim", "#s3-scrim-b", "#svc-ticks"], { opacity: 0 }, 36.0);
+  tl.set("#svc-ticks", { opacity: 1 }, 10.6);
   tl.set([".svc .num", ".svc .ttl"], { opacity: 0 }, 0);
-  // renovation wipe line + labels
-  tl.set("#reno", { opacity: 1 }, 20.6);
-  tl.fromTo("#reno-line", { x: 0.88 * 1920 }, { x: 0.38 * 1920, duration: 1.9, ease: "power2.inOut" }, 21.0);
-  tl.fromTo(".reno-tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 20.8);
-  tl.set("#reno", { opacity: 0 }, 23.4);
-  // consultation board
-  tl.set("#board", { opacity: 1 }, 26.2);
-  tl.set("#s3-scrim-b", { opacity: 0 }, 26.2);
+  svcT.forEach(function (r, i) {
+    var id = "#svc" + (i + 1);
+    tl.fromTo(id + " .num", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, r[0] + 0.35);
+    tl.fromTo(id + " .ttl", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.75, ease: E }, r[0] + 0.45);
+    tl.to("#tk" + (i + 1), { scaleX: 1, duration: r[1] - r[0] - 0.5, ease: "none" }, r[0] + 0.25);
+    tl.to([id + " .num", id + " .ttl"], { opacity: 0, duration: 0.25 }, r[1] - 0.4);
+  });
+
+  // ===== 10.5 – 14  01 CONSULTATION & PROJECT MANAGEMENT =====
+  show("#board", 10.5);
   document.querySelectorAll("#plan .d").forEach(function (el, i) {
     var L = el.getTotalLength ? el.getTotalLength() : 1000;
     el.style.strokeDasharray = L; el.style.strokeDashoffset = L;
-    tl.to(el, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 26.4 + i * 0.12);
+    tl.to(el, { strokeDashoffset: 0, duration: 0.9, ease: EI }, 10.8 + i * 0.12);
   });
-  tl.fromTo("#plan text", { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.08 }, 27.4);
-  tl.fromTo("#sched", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 26.4);
-  ["#bar1", "#bar2", "#bar3", "#bar4"].forEach(function (id, i) { tl.to(id, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 26.9 + i * 0.3); });
-  tl.to(["#s3h", "#svc5", "#svc-ticks"], { opacity: 0, duration: 0.3 }, 28.65);
-  tl.set(["#board", "#s3-scrim"], { opacity: 0 }, 29.0);
+  tl.fromTo("#plan text", { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.08 }, 11.8);
+  tl.fromTo("#sched", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.8, ease: E }, 10.8);
+  ["#bar1", "#bar2", "#bar3", "#bar4"].forEach(function (id, i) { tl.to(id, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 11.4 + i * 0.35); });
+  hide("#board", 14.0);
 
-  // ================= S4 (29 – 40) =================
-  tl.set("#proc", { opacity: 1 }, 29.0);
-  tl.fromTo("#proc", { scale: 1.0 }, { scale: 1.035, duration: 11, ease: "none" }, 29.0);
-  tl.fromTo("#p-eb", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 29.3);
-  tl.fromTo("#p-h", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: E }, 29.5);
-  tl.fromTo("#track", { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: EI }, 30.2);
-  [1, 2, 3, 4, 5, 6].forEach(function (k, i) {
-    var id = "#nd" + k;
-    tl.fromTo(id, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: E }, 30.6 + i * 0.14);
-  });
-  var stepT = [32.4, 33.65, 34.9, 36.15, 37.4, 38.65];
-  stepT.forEach(function (t, i) {
+  // ===== 18 – 23  03 NEW HOUSE CONSTRUCTION: 3D structure, then the real site =====
+  tl.to("#cs-build", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 20.4);
+  tl.fromTo("#cs-build .card", { opacity: 0, y: 60, scale: 0.94, rotation: 1.5 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 1.0, ease: E }, 20.5);
+  tl.fromTo("#cs-build .ci img", { scale: 1.0 }, { scale: 1.12, duration: 2.6, ease: "none" }, 20.4);
+  tl.fromTo("#cs-build .bgimg", { scale: 1.0 }, { scale: 1.08, duration: 2.6, ease: "none" }, 20.4);
+  hide("#cs-build", 23.0);
+
+  // ===== card scenes (photos zoom in = forward motion) =====
+  function cards(sid, t0, t1, step) {
+    var n = document.querySelectorAll("#" + sid + " .card").length;
+    for (var k = 0; k < n; k++) {
+      var sel = "#" + sid + " .card:nth-of-type(" + (k + 1) + ")";
+      tl.fromTo(sel, { opacity: 0, y: 70, scale: 0.92, rotation: k % 2 ? -1.5 : 1.5 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 0.9, ease: E }, t0 + 0.12 + k * step);
+      tl.fromTo(sel + " .ci img", { scale: 1.0 }, { scale: 1.12, duration: t1 - t0, ease: "none" }, t0);
+    }
+    if (sid !== "cs-wall") tl.fromTo("#" + sid + " .card", { x: 20 }, { x: -20, duration: t1 - t0, ease: "none" }, t0);
+  }
+  // 23 – 29  WHAT WE BUILD: gold scan line reveals the completed homes
+  show("#cs-open", 23.0); show("#ph-s2-line", 23.0);
+  tl.fromTo("#cs-open", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, ease: EI }, 23.0);
+  tl.fromTo("#ph-s2-line", { x: 0 }, { x: 1920, duration: 1.2, ease: EI }, 23.0);
+  hide("#ph-s2-line", 24.25);
+  cards("cs-open", 23.3, 26.2, 0.14);
+  slideIn("#wb-eb", 23.5); mask("#wb-h", 23.7); rise("#wb-p", 24.2);
+  tl.to("#cs-open .card", { opacity: 0, y: -30, duration: 0.35, ease: "power2.in", stagger: 0.05 }, 25.85);
+  show("#cs-real", 26.2); cards("cs-real", 26.2, 29.0, 0.16);
+  hide(["#cs-open", "#cs-real", "#wbh"], 29.0);
+
+  // 29 – 32  04 RENOVATION & EXTENSION
+  show("#reno", 29.0);
+  tl.fromTo("#reno-line", { x: 0.88 * 1920 }, { x: 0.38 * 1920, duration: 1.9, ease: EI }, 29.4);
+  tl.fromTo(".reno-tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 29.2);
+  hide("#reno", 32.0);
+
+  // 32 – 36  05 INTERIOR WORKS
+  show("#ph-int", 32.0);
+  tl.fromTo("#ph-int img", { scale: 1.0, x: 0 }, { scale: 1.1, x: -40, duration: 2.0, ease: "none" }, 32.0);
+  tl.to("#cs-int", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 33.7);
+  cards("cs-int", 33.7, 36.0, 0.12);
+  hide(["#ph-int", "#cs-int"], 36.0);
+
+  // ===== 36 – 44  OUR PROCESS =====
+  show("#proc", 36.0);
+  tl.fromTo("#proc", { scale: 1.0 }, { scale: 1.035, duration: 8, ease: "none" }, 36.0);
+  rise("#p-eb", 36.2); mask("#p-h", 36.4, 1.0);
+  tl.fromTo("#track", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: EI }, 36.9);
+  for (var n = 1; n <= 6; n++) tl.fromTo("#nd" + n, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: E }, 37.1 + (n - 1) * 0.1);
+  [38.3, 39.2, 40.1, 41.0, 41.9, 42.8].forEach(function (t, i) {
     var id = "#nd" + (i + 1);
-    tl.to("#track-fill", { scaleX: i / 5, duration: i === 0 ? 0.01 : 0.6, ease: EI }, t - (i === 0 ? 0 : 0.35));
+    tl.to("#track-fill", { scaleX: i / 5, duration: i === 0 ? 0.01 : 0.5, ease: EI }, t - (i === 0 ? 0 : 0.3));
     tl.to(id + " .dot i", { scale: 1, duration: 0.45, ease: "back.out(2.2)" }, t);
     tl.to(id + " .dot", { borderColor: "rgba(230,201,138,1)", duration: 0.3 }, t);
     tl.to(id + " .n", { color: "rgba(230,201,138,1)", duration: 0.35 }, t);
     tl.to(id + " .t", { color: "rgba(245,244,241,1)", y: -4, duration: 0.35 }, t);
     if (i > 0) tl.to("#nd" + i + " .n", { color: "rgba(230,201,138,.55)", duration: 0.4 }, t);
   });
-  tl.to(["#proc-head", ".node", "#track", "#track-fill"], { opacity: 0, duration: 0.4 }, 39.55);
-  tl.set("#proc", { opacity: 0 }, 40.0);
+  hide("#proc", 44.0);
 
-  // ================= S5 (40 – 51) =================
-  tl.set("#s5-scrim", { opacity: 1 }, 40.0);
-  tl.fromTo("#s5-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 40.2);
-  var kwT = [40.2, 42.4, 44.2, 46.3];
-  kwT.forEach(function (t, i) {
-    var id = "#kw" + (i + 1);
-    tl.fromTo(id, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, t);
+  // ===== 44 – 51  WHY PRC BUILDERS =====
+  show("#s5-scrim", 44.0); slideIn("#s5-eb", 44.15);
+  [44.3, 45.2, 46.1, 47.0].forEach(function (t, i) {
+    tl.fromTo("#kw" + (i + 1), { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, t);
     if (i > 0) tl.to("#kw" + i + " .w", { opacity: 0.45, duration: 0.5 }, t);
   });
-  tl.to("#s5", { opacity: 0, duration: 0.3 }, 47.75);
-  tl.set("#s5-scrim", { opacity: 0 }, 48.0);
-  tl.to("#s5t-scrim", { opacity: 1, duration: 0.8 }, 48.0);
-  tl.fromTo("#s5t-a", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 48.2);
-  tl.fromTo("#s5t-b", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 49.95);
-  tl.to(["#s5t-a", "#s5t-b"], { yPercent: -105, duration: 0.45, ease: "power2.in", stagger: 0.06 }, 50.5);
-  tl.set("#s5t-scrim", { opacity: 0 }, 51.0);
-
-  // ================= S6 (51 – 60) =================
-  tl.to("#s6scrim", { opacity: 1, duration: 1.6, ease: "power1.inOut" }, 53.8);
-  tl.set("#end-logo", { opacity: 1 }, 54.9);
-  tl.fromTo("#end-logo", { "--m": "100%", "--s": "100%", y: 10 }, { "--m": "0%", "--s": "0%", y: 0, duration: 1.5, ease: "power2.inOut" }, 54.9);
-  tl.fromTo("#s6-cta", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: E }, 55.9);
-  tl.fromTo("#s6-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: EI }, 56.5);
-  tl.fromTo("#s6-co", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 56.7);
-  tl.fromTo("#s6-tag", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.0);
-  tl.fromTo("#s6-web", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.35);
-
-  // ================= real photos (each used once) =================
-  tl.to("#cs-open", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 2.5);
-  tl.fromTo("#cs-open .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.6);
-  tl.fromTo("#cs-open .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.5);
-  tl.fromTo("#cs-open .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.72);
-  tl.fromTo("#cs-open .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.5);
-  tl.fromTo("#cs-open .card:nth-of-type(3)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.84);
-  tl.fromTo("#cs-open .card:nth-of-type(3) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.5);
-  tl.fromTo("#cs-open .card", { x: 0 }, { x: -24, duration: 3.5, ease: "none" }, 2.5);
-  tl.set("#cs-open", { opacity: 0 }, 6.0);
-  tl.set("#cs-real", { opacity: 1 }, 11.4);
-  tl.fromTo("#cs-real .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 11.5);
-  tl.fromTo("#cs-real .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.6, ease: "none" }, 11.4);
-  tl.fromTo("#cs-real .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 11.62);
-  tl.fromTo("#cs-real .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.6, ease: "none" }, 11.4);
-  tl.fromTo("#cs-real .card", { x: 0 }, { x: -24, duration: 3.6, ease: "none" }, 11.4);
-  tl.set("#cs-real", { opacity: 0 }, 15.0);
-  tl.fromTo("#cs-real", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power2.inOut" }, 11.5);
-  tl.set("#ph-s2-line", { opacity: 1 }, 11.5);
-  tl.fromTo("#ph-s2-line", { x: 0 }, { x: 1920, duration: 1.5, ease: "power2.inOut" }, 11.5);
-  tl.set("#ph-s2-line", { opacity: 0 }, 13.0);
-  // New House Construction: 3D structure rises, then the real site photo
-  tl.to("#cs-build", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 19.2);
-  tl.fromTo("#cs-build .card", { opacity: 0, y: 46, x: 0 }, { opacity: 1, y: 0, x: -20, duration: 1.4, ease: "power3.out" }, 19.3);
-  tl.fromTo("#cs-build .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.4, ease: "none" }, 19.2);
-  tl.fromTo("#cs-build .bgimg", { scale: 1.06 }, { scale: 1.0, duration: 1.4, ease: "none" }, 19.2);
-  tl.set("#cs-build", { opacity: 0 }, 20.6);
-  tl.set("#ph-int", { opacity: 1 }, 23.4);
-  tl.fromTo("#ph-int img", { scale: 1.0, x: 0 }, { scale: 1.08, x: -40, duration: 1.8, ease: "none" }, 23.4);
-  tl.set("#ph-int", { opacity: 0 }, 26.2);
-  tl.to("#cs-int", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 24.75);
-  tl.fromTo("#cs-int .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 24.85);
-  tl.fromTo("#cs-int .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
-  tl.fromTo("#cs-int .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 24.95);
-  tl.fromTo("#cs-int .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
-  tl.fromTo("#cs-int .card:nth-of-type(3)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 25.05);
-  tl.fromTo("#cs-int .card:nth-of-type(3) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
-  tl.fromTo("#cs-int .card", { x: 0 }, { x: -24, duration: 1.45, ease: "none" }, 24.75);
-  tl.set("#cs-int", { opacity: 0 }, 26.2);
-  tl.set("#cs-why1", { opacity: 1 }, 40.0);
-  tl.fromTo("#cs-why1 .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 40.1);
-  tl.fromTo("#cs-why1 .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 40.0);
-  tl.fromTo("#cs-why1 .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 40.22);
-  tl.fromTo("#cs-why1 .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.5, ease: "none" }, 40.0);
-  tl.fromTo("#cs-why1 .card", { x: 0 }, { x: -24, duration: 3.5, ease: "none" }, 40.0);
-  tl.set("#cs-why1", { opacity: 0 }, 43.5);
-  tl.set("#cs-why2", { opacity: 1 }, 43.5);
-  tl.fromTo("#cs-why2 .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 43.6);
-  tl.fromTo("#cs-why2 .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 4.5, ease: "none" }, 43.5);
-  tl.fromTo("#cs-why2 .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 43.72);
-  tl.fromTo("#cs-why2 .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 4.5, ease: "none" }, 43.5);
-  tl.fromTo("#cs-why2 .card", { x: 0 }, { x: -24, duration: 4.5, ease: "none" }, 43.5);
-  tl.set("#cs-why2", { opacity: 0 }, 48.0);
-  tl.set("#cs-wall", { opacity: 1 }, 48.0);
-  tl.fromTo("#cs-wall .card:nth-of-type(1)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.1);
-  tl.fromTo("#cs-wall .card:nth-of-type(1) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
-  tl.fromTo("#cs-wall .card:nth-of-type(2)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.18);
-  tl.fromTo("#cs-wall .card:nth-of-type(2) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
-  tl.fromTo("#cs-wall .card:nth-of-type(3)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.26);
-  tl.fromTo("#cs-wall .card:nth-of-type(3) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
-  tl.fromTo("#cs-wall .card:nth-of-type(4)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.34);
-  tl.fromTo("#cs-wall .card:nth-of-type(4) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
-  tl.fromTo("#cs-wall .card:nth-of-type(5)", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 48.42);
-  tl.fromTo("#cs-wall .card:nth-of-type(5) .ci img", { scale: 1.12 }, { scale: 1.0, duration: 3.0, ease: "none" }, 48.0);
-  tl.set("#cs-wall", { opacity: 0 }, 51.0);
+  show("#cs-why1", 44.0); cards("cs-why1", 44.0, 46.2, 0.14);
+  tl.to("#cs-why1 .card", { opacity: 0, y: -30, duration: 0.3, ease: "power2.in", stagger: 0.05 }, 45.85);
+  show("#cs-why2", 46.2); cards("cs-why2", 46.2, 48.0, 0.14);
+  tl.to("#s5", { opacity: 0, duration: 0.3 }, 47.7);
+  hide(["#cs-why1", "#cs-why2", "#s5-scrim"], 48.0);
+  // tagline over the moving project wall
+  show("#cs-wall", 48.0); cards("cs-wall", 48.0, 51.0, 0.08);
   tl.fromTo("#wall-row", { x: 0 }, { x: -320, duration: 3.0, ease: "none" }, 48.0);
-  // Closing: the finished home in a warm golden grade, camera pulling away
-  tl.set("#ph-end", { opacity: 1 }, 51.0);
-  tl.fromTo("#ph-end img", { scale: 1.2, y: -20 }, { scale: 1.0, y: 0, duration: 9, ease: "power1.out" }, 51.0);
+  tl.to("#s5t-scrim", { opacity: 1, duration: 0.6 }, 48.0);
+  mask("#s5t-a", 48.25); mask("#s5t-b", 49.4);
+  tl.to(["#s5t-a", "#s5t-b"], { yPercent: -105, duration: 0.4, ease: "power2.in", stagger: 0.06 }, 50.45);
+  hide(["#cs-wall", "#s5t-scrim"], 51.0);
+
+  // ===== 51 – 60  CLOSING =====
+  show("#ph-end", 51.0);
+  tl.fromTo("#ph-end img", { scale: 1.0, y: 0 }, { scale: 1.14, y: -16, duration: 9, ease: "power1.inOut" }, 51.0);
+  tl.to("#s6scrim", { opacity: 1, duration: 1.4, ease: "power1.inOut" }, 53.6);
+  show("#end-logo", 54.6);
+  tl.fromTo("#end-logo", { "--m": "100%", "--s": "100%", y: 12, scale: 0.94 }, { "--m": "0%", "--s": "0%", y: 0, scale: 1, duration: 1.5, ease: EI }, 54.6);
+  mask("#s6-cta", 55.6, 1.0);
+  tl.fromTo("#s6-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: EI }, 56.2);
+  rise("#s6-co", 56.4); rise("#s6-tag", 56.7); rise("#s6-web", 57.05);
 
   tl.set({}, {}, 60);
   window.__timelines = window.__timelines || {};

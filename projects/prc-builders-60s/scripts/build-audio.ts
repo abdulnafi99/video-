@@ -191,42 +191,32 @@ function buildMusic() {
   const cardPan = (x: number, w: number) => ((x + w / 2) / 1920) * 2 - 1;
   const cards = (t0: number, xs: number[], w: number, step = 0.12) => xs.forEach((x, k) => swish(t0 + 0.1 + k * step, 0.15, cardPan(x, w)));
 
-  // S1 intro + opening cards + headline
-  shimmer(0.3, 1.9, 0.05); placeWhoosh(1.3, 0.1); tick(1.3, 0.06);
-  cards(2.5, [290, 750, 1210], 420);
-  tick(3.3, 0.08, -0.5); tick(3.9, 0.08, -0.5); placeWhoosh(5.5, 0.08);
-  // S2 blueprint scan, planning checklist, sweep into the real house
-  riser(9.4, 3.0, 0.1);
-  [8.0, 9.0, 10.0].forEach((t) => tick(t, 0.08, 0.6));
-  tick(6.95, 0.07, -0.5); placeWhoosh(9.9, 0.14); placeWhoosh(12.2, 0.16);
-  cards(11.4, [1130, 1500], 340);
-  // S3 services: title ticks, renovation wipe, interior cards, schedule bars
-  [15.4, 18.2, 21.0, 23.8, 26.6].forEach((t) => tick(t, 0.08, -0.6));
-  tick(15.55, 0.06, -0.6); placeWhoosh(21.95, 0.14);
-  swish(19.4, 0.17, 0.5); // construction photo card
-  cards(24.75, [720, 1090, 1460], 340, 0.1);
-  [26.9, 27.2, 27.5, 27.8].forEach((t, i) => tick(t, 0.07, 0.2 + i * 0.15));
-  // S4 process: track draw + one rising ping per step
-  placeWhoosh(30.9, 0.12); tick(29.55, 0.07);
-  [32.4, 33.65, 34.9, 36.15, 37.4, 38.65].forEach((t, i) => ping(t, [880, 988, 1109, 1175, 1319, 1480][i], 0.11));
-  // S5 why PRC: keyword ticks, photo cards, project wall, tagline
-  [40.2, 42.4, 44.2, 46.3].forEach((t) => tick(t, 0.09, -0.6));
-  cards(40.0, [1040, 1440], 360); cards(43.5, [1040, 1440], 360);
+  // chronological cut — every cue sits on an on-screen move
+  hit(0.35, 0.55); shimmer(0.3, 1.9, 0.05); placeWhoosh(1.3, 0.1); tick(1.3, 0.06);
+  tick(3.0, 0.08); tick(3.4, 0.08); placeWhoosh(4.1, 0.08);
+  [5.0, 10.5, 14.0, 18.0, 29.0, 32.0, 36.0, 44.0, 51.0].forEach((t) => placeWhoosh(t, 0.2));
+  [5.0, 18.0, 36.0, 44.0].forEach((t) => hit(t, 0.32));
+  riser(51.0, 2.2, 0.28); hit(51.0, 0.42);
+  riser(8.6, 3.2, 0.08); tick(5.55, 0.07, -0.5);
+  [6.8, 7.6, 8.4].forEach((t) => tick(t, 0.08, 0.6));
+  [10.95, 14.45, 18.45, 29.45, 32.45].forEach((t) => tick(t, 0.08, -0.6));
+  tick(10.9, 0.06, -0.6);
+  [11.4, 11.75, 12.1, 12.45].forEach((t, i) => tick(t, 0.07, 0.2 + i * 0.15));
+  placeWhoosh(15.7, 0.15);
+  swish(20.6, 0.17, 0.5);
+  placeWhoosh(23.6, 0.16); hit(23.0, 0.28);
+  cards(23.3, [700, 1090, 1480], 360, 0.14); tick(23.75, 0.07, -0.6);
+  cards(26.2, [1060, 1460], 360, 0.16);
+  placeWhoosh(30.35, 0.14);
+  cards(33.7, [720, 1090, 1460], 340, 0.12);
+  placeWhoosh(37.4, 0.12); tick(36.45, 0.07);
+  [38.3, 39.2, 40.1, 41.0, 41.9, 42.8].forEach((t, i) => ping(t, [880, 988, 1109, 1175, 1319, 1480][i], 0.11));
+  [44.3, 45.2, 46.1, 47.0].forEach((t) => tick(t, 0.09, -0.6));
+  cards(44.0, [1040, 1440], 360, 0.14); cards(46.2, [1040, 1440], 360, 0.14);
   placeWhoosh(49.4, 0.12); cards(48.0, [100, 540, 980, 1420, 1860], 400, 0.08);
-  hit(48.2, 0.18); hit(49.95, 0.2);
-  // S6 closing: logo shimmer + detail ticks
-  shimmer(54.9, 1.5, 0.06);
-  tick(55.95, 0.08); [56.7, 57.0, 57.35].forEach((t) => tick(t, 0.06));
-
-  hit(0.35, 0.55);            // logo light sweep
-  riser(6.0, 1.6, 0.25); hit(6.0, 0.35);
-  riser(15.0, 1.6, 0.25); hit(15.0, 0.4);
-  [17.8, 20.6, 23.4, 26.2].forEach((t) => placeWhoosh(t, 0.22));
-  riser(29.0, 1.6, 0.25); hit(29.0, 0.4);
-  riser(40.0, 1.6, 0.25); hit(40.0, 0.4);
-  [43.5, 48.0].forEach((t) => placeWhoosh(t, 0.22));
-  riser(51.0, 2.2, 0.3); hit(51.0, 0.45);
-  hit(55.0, 0.5);             // closing logo
+  hit(48.25, 0.18); hit(49.4, 0.2);
+  shimmer(54.6, 1.5, 0.06); hit(54.7, 0.45);
+  tick(55.65, 0.08); [56.4, 56.7, 57.05].forEach((t) => tick(t, 0.06));
 
   // gentle master fade at the very end
   for (let i = 0; i < N; i++) {

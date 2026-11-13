@@ -468,91 +468,49 @@ let lastShot = "";
 function renderAt(t) {
   renderer.setScissorTest(false);
   renderer.setViewport(0, 0, W, H);
-  // ----- S1b: aerial reveal of the finished home (2.6 – 6.0)
-  // real photos cover these spans; skip the 3D draw
-  if (t < 6.0 || (t >= 12.95 && t < 15.0) || (t >= 19.7 && t < 20.6) || (t >= 23.4 && t < 26.2) || t >= 40.0) return;
-  if (t < 6.0) {
-    resetConstruction(); setTimeOfDay(0.32); showExt({ edgesOn: false }); setClip(1e5, 1e5, -1e5); setShadowBox(22);
-    const u = span(t, 2.4, 6.0);
-    path(u, V(34, 21, 40), V(19, 10.5, 27), V(-1, 1.5, 0), V(-1, 2.6, 0.5), 32);
-    return draw(ext);
-  }
-  // ----- S2: blueprint → real home (6 – 15)
-  if (t < 15.0) {
-    resetConstruction(); setTimeOfDay(0.32); setShadowBox(22);
-    const u = span(t, 6.0, 15.0);
-    const lineH = lerp(-0.5, 9.0, easeIO(span(t, 6.2, 9.2)));
-    const sweep = t < 9.4 ? -1e4 : lerp(-34, 30, easeIO(span(t, 9.4, 11.3)));
-    showExt({ edgesOn: true, grid: true, streetOn: true });
-    setClip(sweep, lineH, sweep);
-    scan.position.set(sweep, 6, 0); scanGlow.position.set(sweep - 0.05, 6, 0);
-    const vis = span(t, 9.4, 9.7) * (1 - span(t, 11.0, 11.3)); scanMat.opacity = 0.9 * vis; scanGlowMat.opacity = 0.06 * vis;
-    orbit(lerp(0.95, 0.42, easeIO(u)), lerp(34, 25, easeIO(u)), lerp(15, 7.5, easeIO(u)), V(-0.5, lerp(2.2, 2.8, u), 0.5), 34);
-    return draw(ext);
-  }
-  // ----- S3 services (15 – 26.2); 26.2 – 29 is a 2D board
-  if (t < 17.8) { // Design & Build: half visualisation, half wireframe
-    resetConstruction(); setTimeOfDay(0.25); setShadowBox(22);
-    const u = span(t, 15.0, 17.8);
+  // 3D is drawn only where it is on screen; photos and 2D boards cover everything else
+  if (t < 5.0 || (t >= 10.5 && t < 14.0) || (t >= 20.9 && t < 29.0) || t >= 32.0) return;
+  // ----- WHO WE ARE: gold blueprint lines draw themselves (5 – 10.5)
+  if (t < 10.5) {
+    resetConstruction(); setTimeOfDay(0.3); setShadowBox(22);
+    const u = span(t, 5.0, 10.5);
     showExt({ edgesOn: true, grid: true, streetOn: false });
-    const s = lerp(2.5, -1.5, easeIO(u)); setClip(s, 1e5, s);
-    scan.position.set(s, 6, 0); scanGlow.position.set(s - 0.05, 6, 0); scanMat.opacity = 0.85; scanGlowMat.opacity = 0.05;
-    orbit(lerp(0.15, 0.5, u), 27, lerp(6.5, 8.0, u), V(-0.5, 2.8, 0.5), 33);
+    setClip(-1e4, lerp(-0.5, 9.0, easeIO(span(t, 5.2, 8.6))), -1e4);
+    scanMat.opacity = 0; scanGlowMat.opacity = 0;
+    orbit(lerp(1.05, 0.62, easeIO(u)), lerp(36, 28, easeIO(u)), lerp(17, 10, easeIO(u)), V(-0.5, 2.4, 0.5), 34);
     return draw(ext);
   }
-  if (t < 20.6) { // New house construction
-    const u = span(t, 17.8, 20.6);
+  // ----- 02 DESIGN & BUILD: a gold scan wall turns the drawing into the house (14 – 18)
+  if (t < 18.0) {
+    resetConstruction(); setTimeOfDay(0.3); setShadowBox(22);
+    const u = span(t, 14.0, 18.0);
+    const sweep = lerp(-30, 26, easeIO(span(t, 14.4, 17.0)));
+    showExt({ edgesOn: true, grid: true, streetOn: false });
+    setClip(sweep, 1e5, sweep);
+    scan.position.set(sweep, 6, 0); scanGlow.position.set(sweep - 0.05, 6, 0);
+    const vis = span(t, 14.4, 14.7) * (1 - span(t, 16.7, 17.0)); scanMat.opacity = 0.9 * vis; scanGlowMat.opacity = 0.06 * vis;
+    orbit(lerp(0.55, 0.22, easeIO(u)), lerp(27, 24, easeIO(u)), lerp(8.5, 6.5, easeIO(u)), V(-0.5, 2.8, 0.5), 34);
+    return draw(ext);
+  }
+  // ----- 03 NEW HOUSE CONSTRUCTION: structure rises inside scaffolding (18 – 20.9)
+  if (t < 20.9) {
+    const u = span(t, 18.0, 20.9);
     setTimeOfDay(0.12); setShadowBox(22); showExt({ scaf: true, streetOn: false, landOn: true }); setClip(1e5, 1e5, -1e5);
-    construction(lerp(0.18, 0.86, u));
-    scaffold.visible = u < 0.93;
+    construction(lerp(0.1, 0.8, u));
     path(u, V(17, 2.2, 19), V(13, 3.6, 16), V(-1, 3.2, 0), V(-1.5, 3.6, 0), 36);
     return draw(ext);
   }
-  if (t < 23.4) { // Renovation & extension: before | after wipe
-    resetConstruction(); setTimeOfDay(0.3); setShadowBox(22); setClip(1e5, 1e5, -1e5);
-    const u = span(t, 20.6, 23.4);
-    path(u, V(3, 4.6, 30), V(1.5, 4.4, 27), V(-1.5, 2.6, 0), V(-1.5, 2.9, 0), 34);
-    const split = Math.round(window.__renoSplit(t) * W);
-    renderer.setScissorTest(true);
-    showExt({ house: false, old: true, streetOn: false, landOn: true });
-    renderer.setScissor(0, 0, split, H); renderer.setViewport(0, 0, W, H); renderer.render(ext, camera);
-    showExt({ house: true, old: false, streetOn: false, landOn: true });
-    renderer.setScissor(split, 0, W - split, H); renderer.render(ext, camera);
-    renderer.setScissorTest(false);
-    return;
-  }
-  if (t < 26.2) { // Interior works
-    const u = span(t, 23.4, 26.2);
-    renderer.toneMappingExposure = 1.0;
-    path(u, V(-4.6, 1.55, 4.6), V(-3.2, 1.35, 3.4), V(-0.6, 0.9, -2.0), V(-0.2, 0.95, -2.2), 40);
-    return draw(inn);
-  }
-  if (t < 40.0) return; // 2D boards: consultation (26.2 – 29) and process (29 – 40)
-  // ----- S5 craftsmanship (40 – 51)
-  if (t < 43.5) { // timber slat facade close-up, raking golden light
-    resetConstruction(); setTimeOfDay(0.62); setShadowBox(12, 2, 2); showExt({ streetOn: false }); setClip(1e5, 1e5, -1e5);
-    const u = span(t, 40.0, 43.5);
-    path(u, V(9.5, 4.6, 8.6), V(7.0, 5.0, 7.3), V(3.0, 5.6, 4.4), V(2.2, 5.5, 4.3), 30);
-    return draw(ext);
-  }
-  if (t < 48.0) { // material selection studio
-    const u = span(t, 43.5, 48.0);
-    renderer.toneMappingExposure = 1.45;
-    let i = 0; studio.children.forEach((c) => { if (c.userData.spin) { c.rotation.y = 0.5 + i * 0.3 + u * 0.6; i++; } });
-    path(u, V(-5.8, 2.4, 5.2), V(3.8, 2.0, 4.4), V(-3.4, 1.15, 0), V(3.4, 1.15, 0), 34);
-    return draw(studio);
-  }
-  if (t < 51.0) { // aerial over the street of completed homes
-    resetConstruction(); setTimeOfDay(0.5); setShadowBox(70, 5, 10); showExt({}); setClip(1e5, 1e5, -1e5);
-    const u = span(t, 48.0, 51.0);
-    path(u, V(-58, 34, 52), V(-14, 30, 56), V(-30, 0, 8), V(8, 0, 6), 36);
-    return draw(ext);
-  }
-  // ----- S6 golden hour close (51 – 60)
-  resetConstruction(); setTimeOfDay(1.0); setShadowBox(30); showExt({}); setClip(1e5, 1e5, -1e5);
-  const u = span(t, 51.0, 60.0);
-  path(u, V(9.5, 1.7, 18.5), V(27, 9.5, 46), V(-1.5, 4.3, 1), V(-1.5, 4.0, 1), lerp(36, 38, u));
-  return draw(ext);
+  // ----- 04 RENOVATION & EXTENSION: before | after wipe (29 – 32)
+  resetConstruction(); setTimeOfDay(0.3); setShadowBox(22); setClip(1e5, 1e5, -1e5);
+  const u = span(t, 29.0, 32.0);
+  path(u, V(3, 4.6, 30), V(1.5, 4.4, 27), V(-1.5, 2.6, 0), V(-1.5, 2.9, 0), 34);
+  const split = Math.round(window.__renoSplit(t) * W);
+  renderer.setScissorTest(true);
+  showExt({ house: false, old: true, streetOn: false, landOn: true });
+  renderer.setScissor(0, 0, split, H); renderer.setViewport(0, 0, W, H); renderer.render(ext, camera);
+  showExt({ house: true, old: false, streetOn: false, landOn: true });
+  renderer.setScissor(split, 0, W - split, H); renderer.render(ext, camera);
+  renderer.setScissorTest(false);
 }
 function draw(scene) { renderer.render(scene, camera); }
 
@@ -563,7 +521,7 @@ window.__hf.buildReady.world = (async () => {
   await renderer.compileAsync(ext, camera);
   await renderer.compileAsync(inn, camera);
   await renderer.compileAsync(studio, camera);
-  renderAt(window.__hfTime || 3);
+  renderAt(window.__hfTime || 6);
 })();
 window.addEventListener("hf-seek", (e) => { window.__hfTime = e.detail.time; renderAt(e.detail.time); });
 window.__renderWorld = renderAt;
