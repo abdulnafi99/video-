@@ -608,7 +608,7 @@ function scene3(t){
   const v2k=vis(u,4.8,5.4,9.5,10.1);$('v2').style.display=v2k>0?'block':'none';
   if(v2k>0){const [sv,A]=cutaway(u-5);$('v2svg').innerHTML=sv;$('v2').style.opacity=v2k;$('v2').style.transform=`translateY(${(1-ep(u,4.8,5.8,'outExpo'))*60}px)`;
     lines+=label(0,s3L.p1,A.pit,-150,190,vis(u,5.7,6.3,9.3,9.7));
-    lines+=label(0,s3L.p2,A.rebar,130,-150,vis(u,6.8,7.4,9.3,9.7));
+    lines+=label(0,s3L.p2,A.rebar,-140,-150,vis(u,6.8,7.4,9.3,9.7));
     lines+=label(0,s3L.p3,A.slab,-120,-170,vis(u,8.2,8.8,9.3,9.7));
   } else {s3L.p1.style.opacity=s3L.p2.style.opacity=s3L.p3.style.opacity=0;}
   // V3 iso structure + finishing
