@@ -274,7 +274,7 @@ window.__renoSplit = function (t) {
   // ---------- dips to black between chapters (cut happens at the boundary)
   function dip(at, inD, outD) { tl.to("#dip", { opacity: 1, duration: inD, ease: "power1.in" }, at - inD); tl.to("#dip", { opacity: 0, duration: outD, ease: "power1.out" }, at); }
   [6.0, 15.0, 29.0, 40.0, 51.0].forEach(function (t) { dip(t, 0.35, 0.5); });
-  [17.8, 20.6, 23.4, 26.2, 43.5, 47.6].forEach(function (t) { dip(t, 0.2, 0.3); });
+  [17.8, 20.6, 23.4, 26.2, 43.5, 48.0].forEach(function (t) { dip(t, 0.2, 0.3); });
 
   // ---------- 3D canvas visibility
   tl.set("#gl", { opacity: 0 }, 0);
@@ -367,18 +367,18 @@ window.__renoSplit = function (t) {
   // ================= S5 (40 – 51) =================
   tl.set("#s5-scrim", { opacity: 1 }, 40.0);
   tl.fromTo("#s5-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 40.2);
-  var kwT = [40.3, 42.2, 43.9, 46.0];
+  var kwT = [40.2, 42.4, 44.2, 46.3];
   kwT.forEach(function (t, i) {
     var id = "#kw" + (i + 1);
     tl.fromTo(id, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, t);
     if (i > 0) tl.to("#kw" + i + " .w", { opacity: 0.45, duration: 0.5 }, t);
   });
-  tl.to("#s5", { opacity: 0, duration: 0.3 }, 47.3);
-  tl.set("#s5-scrim", { opacity: 0 }, 47.6);
-  tl.to("#s5t-scrim", { opacity: 1, duration: 0.8 }, 47.6);
-  tl.fromTo("#s5t-a", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 47.85);
-  tl.fromTo("#s5t-b", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 49.2);
-  tl.to(["#s5t-a", "#s5t-b"], { yPercent: -105, duration: 0.45, ease: "power2.in", stagger: 0.06 }, 50.4);
+  tl.to("#s5", { opacity: 0, duration: 0.3 }, 47.75);
+  tl.set("#s5-scrim", { opacity: 0 }, 48.0);
+  tl.to("#s5t-scrim", { opacity: 1, duration: 0.8 }, 48.0);
+  tl.fromTo("#s5t-a", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 48.2);
+  tl.fromTo("#s5t-b", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 49.95);
+  tl.to(["#s5t-a", "#s5t-b"], { yPercent: -105, duration: 0.45, ease: "power2.in", stagger: 0.06 }, 50.5);
   tl.set("#s5t-scrim", { opacity: 0 }, 51.0);
 
   // ================= S6 (51 – 60) =================

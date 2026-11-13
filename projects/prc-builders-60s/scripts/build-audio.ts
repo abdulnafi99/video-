@@ -153,7 +153,7 @@ function buildMusic() {
   [17.8, 20.6, 23.4, 26.2].forEach((t) => placeWhoosh(t, 0.22));
   riser(29.0, 1.6, 0.25); hit(29.0, 0.4);
   riser(40.0, 1.6, 0.25); hit(40.0, 0.4);
-  [43.5, 47.6].forEach((t) => placeWhoosh(t, 0.22));
+  [43.5, 48.0].forEach((t) => placeWhoosh(t, 0.22));
   riser(51.0, 2.2, 0.3); hit(51.0, 0.45);
   hit(55.0, 0.5);             // closing logo
 
@@ -180,9 +180,11 @@ function buildMix() {
     "-map", "[o]", "-ac", "2", "-c:a", "pcm_s16le", path.join(OUT, "mix.wav")]);
 }
 
+// --mix-only: keep music.wav and vo.wav; --keep-vo: rebuild music but keep vo.wav (e.g. a recorded take)
 const mixOnly = process.argv.includes("--mix-only");
+const keepVo = process.argv.includes("--keep-vo");
 if (!mixOnly) {
-  buildVO();
+  if (!keepVo) buildVO();
   buildMusic();
 }
 buildMix();

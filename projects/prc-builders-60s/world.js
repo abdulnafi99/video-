@@ -533,8 +533,8 @@ function renderAt(t) {
     path(u, V(9.5, 4.6, 8.6), V(7.0, 5.0, 7.3), V(3.0, 5.6, 4.4), V(2.2, 5.5, 4.3), 30);
     return draw(ext);
   }
-  if (t < 47.6) { // material selection studio
-    const u = span(t, 43.5, 47.6);
+  if (t < 48.0) { // material selection studio
+    const u = span(t, 43.5, 48.0);
     renderer.toneMappingExposure = 1.45;
     let i = 0; studio.children.forEach((c) => { if (c.userData.spin) { c.rotation.y = 0.5 + i * 0.3 + u * 0.6; i++; } });
     path(u, V(-5.8, 2.4, 5.2), V(3.8, 2.0, 4.4), V(-3.4, 1.15, 0), V(3.4, 1.15, 0), 34);
@@ -542,7 +542,7 @@ function renderAt(t) {
   }
   if (t < 51.0) { // aerial over the street of completed homes
     resetConstruction(); setTimeOfDay(0.5); setShadowBox(70, 5, 10); showExt({}); setClip(1e5, 1e5, -1e5);
-    const u = span(t, 47.6, 51.0);
+    const u = span(t, 48.0, 51.0);
     path(u, V(-58, 34, 52), V(-14, 30, 56), V(-30, 0, 8), V(8, 0, 6), 36);
     return draw(ext);
   }
