@@ -203,6 +203,7 @@ function buildMusic() {
   // S3 services: title ticks, renovation wipe, interior cards, schedule bars
   [15.4, 18.2, 21.0, 23.8, 26.6].forEach((t) => tick(t, 0.08, -0.6));
   tick(15.55, 0.06, -0.6); placeWhoosh(21.95, 0.14);
+  swish(19.4, 0.17, 0.5); // construction photo card
   cards(24.75, [720, 1090, 1460], 340, 0.1);
   [26.9, 27.2, 27.5, 27.8].forEach((t, i) => tick(t, 0.07, 0.2 + i * 0.15));
   // S4 process: track draw + one rising ping per step

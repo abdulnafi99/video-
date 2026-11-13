@@ -146,6 +146,7 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 .card figcaption::before { content:""; width:28px; height:1px; background:var(--gold); }
 #cs-real { clip-path:inset(0 100% 0 0); }
 #cs-wall .ci img { filter:brightness(.55) saturate(.9); }
+#cs-build .bgimg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 #wall-row { position:absolute; inset:0; }
 .photo .shade { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,.22) 100%); }
 </style>
@@ -160,6 +161,7 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
   <div class="cards" id="cs-open"><div class="cbg"></div><figure class="card" style="left:290px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/chandan-1.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:750px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/lempor-1.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1210px;top:100px;width:420px;height:560px"><div class="ci"><img src="./assets/projects/ipoh-1.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure></div>
   <div class="cards" id="cs-real"><div class="cbg"></div><figure class="card" style="left:1130px;top:300px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/gerik-1.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:1500px;top:300px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/laneh-1.jpg" alt="" /></div><figcaption>LANEH</figcaption></figure></div>
   <div id="ph-s2-line"></div>
+  <div class="cards" id="cs-build"><img class="bgimg" src="./assets/photos/construction-bg.jpg" alt="" /><figure class="card" style="left:1180px;top:170px;width:540px;height:720px"><div class="ci"><img src="./assets/photos/construction.jpg" alt="" /></div><figcaption>ON SITE</figcaption></figure></div>
   <div class="cards" id="cs-int"><div class="cbg"></div><figure class="card" style="left:720px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/../photos/kitchen.jpg" alt="" /></div><figcaption>INTERIOR</figcaption></figure><figure class="card" style="left:1090px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/lempor-6.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure><figure class="card" style="left:1460px;top:250px;width:340px;height:453px"><div class="ci"><img src="./assets/projects/gerik-4.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure></div>
   <div class="cards" id="cs-why1"><div class="cbg"></div><figure class="card" style="left:1040px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/gerik-3.jpg" alt="" /></div><figcaption>GERIK</figcaption></figure><figure class="card" style="left:1440px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/ipoh-3.jpg" alt="" /></div><figcaption>IPOH</figcaption></figure></div>
   <div class="cards" id="cs-why2"><div class="cbg"></div><figure class="card" style="left:1040px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/chandan-6.jpg" alt="" /></div><figcaption>CHANDAN</figcaption></figure><figure class="card" style="left:1440px;top:300px;width:360px;height:480px"><div class="ci"><img src="./assets/projects/lempor-3.jpg" alt="" /></div><figcaption>LEMPOR</figcaption></figure></div>
@@ -444,6 +446,12 @@ window.__renoSplit = function (t) {
   tl.set("#ph-s2-line", { opacity: 1 }, 11.5);
   tl.fromTo("#ph-s2-line", { x: 0 }, { x: 1920, duration: 1.5, ease: "power2.inOut" }, 11.5);
   tl.set("#ph-s2-line", { opacity: 0 }, 13.0);
+  // New House Construction: 3D structure rises, then the real site photo
+  tl.to("#cs-build", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 19.2);
+  tl.fromTo("#cs-build .card", { opacity: 0, y: 46, x: 0 }, { opacity: 1, y: 0, x: -20, duration: 1.4, ease: "power3.out" }, 19.3);
+  tl.fromTo("#cs-build .ci img", { scale: 1.12 }, { scale: 1.0, duration: 1.4, ease: "none" }, 19.2);
+  tl.fromTo("#cs-build .bgimg", { scale: 1.06 }, { scale: 1.0, duration: 1.4, ease: "none" }, 19.2);
+  tl.set("#cs-build", { opacity: 0 }, 20.6);
   tl.set("#ph-int", { opacity: 1 }, 23.4);
   tl.fromTo("#ph-int img", { scale: 1.0, x: 0 }, { scale: 1.08, x: -40, duration: 1.8, ease: "none" }, 23.4);
   tl.set("#ph-int", { opacity: 0 }, 26.2);
