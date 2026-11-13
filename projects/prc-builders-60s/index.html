@@ -151,6 +151,10 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 #cs-open { clip-path:inset(0 100% 0 0); }
 #cs-wall .ci img { filter:brightness(.55) saturate(.9); }
 #cs-build .bgimg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#proc-photos { position:absolute; inset:0; }
+.pcard { position:absolute; top:770px; width:130px; height:173px; margin:0; opacity:0; }
+.pcard .ci { position:absolute; inset:0; overflow:hidden; box-shadow:0 18px 40px rgba(0,0,0,.55); outline:1px solid rgba(255,255,255,.12); }
+.pcard .ci img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 #wall-row { position:absolute; inset:0; }
 .photo .shade { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,.22) 100%); }
 </style>
@@ -266,6 +270,7 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
     <div class="node" id="nd4" style="left:1110px"><div class="n">04</div><div class="dot"><i></i></div><div class="t">Build</div></div>
     <div class="node" id="nd5" style="left:1410px"><div class="n">05</div><div class="dot"><i></i></div><div class="t">Review</div></div>
     <div class="node" id="nd6" style="left:1710px"><div class="n">06</div><div class="dot"><i></i></div><div class="t">Handover</div></div>
+    <div id="proc-photos"><figure class="pcard" id="pc11" style="left:70px"><div class="ci"><img src="./assets/projects/chandan-2.jpg" alt="" /></div></figure><figure class="pcard" id="pc12" style="left:220px"><div class="ci"><img src="./assets/projects/ipoh-2.jpg" alt="" /></div></figure><figure class="pcard" id="pc21" style="left:370px"><div class="ci"><img src="./assets/projects/laneh-5.jpg" alt="" /></div></figure><figure class="pcard" id="pc22" style="left:520px"><div class="ci"><img src="./assets/projects/lempor-2.jpg" alt="" /></div></figure><figure class="pcard" id="pc31" style="left:670px"><div class="ci"><img src="./assets/projects/chandan-5.jpg" alt="" /></div></figure><figure class="pcard" id="pc32" style="left:820px"><div class="ci"><img src="./assets/projects/laneh-6.jpg" alt="" /></div></figure><figure class="pcard" id="pc41" style="left:970px"><div class="ci"><img src="./assets/projects/ipoh-5.jpg" alt="" /></div></figure><figure class="pcard" id="pc42" style="left:1120px"><div class="ci"><img src="./assets/projects/lempor-5.jpg" alt="" /></div></figure><figure class="pcard" id="pc51" style="left:1270px"><div class="ci"><img src="./assets/projects/chandan-3.jpg" alt="" /></div></figure><figure class="pcard" id="pc52" style="left:1420px"><div class="ci"><img src="./assets/projects/laneh-3.jpg" alt="" /></div></figure><figure class="pcard" id="pc61" style="left:1570px"><div class="ci"><img src="./assets/projects/ipoh-6.jpg" alt="" /></div></figure><figure class="pcard" id="pc62" style="left:1720px"><div class="ci"><img src="./assets/projects/gerik-6.jpg" alt="" /></div></figure></div>
   </div>
 
   <!-- S5 -->
@@ -436,7 +441,15 @@ window.__renoSplit = function (t) {
     tl.to(id + " .n", { color: "rgba(230,201,138,1)", duration: 0.35 }, t);
     tl.to(id + " .t", { color: "rgba(245,244,241,1)", y: -4, duration: 0.35 }, t);
     if (i > 0) tl.to("#nd" + i + " .n", { color: "rgba(230,201,138,.55)", duration: 0.4 }, t);
+    // two project photos rise under each step as it lights up
+    [1, 2].forEach(function (k) {
+      var pc = "#pc" + (i + 1) + k;
+      tl.fromTo(pc, { opacity: 0, y: 46, scale: 0.9, rotation: k === 1 ? 2 : -2 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 0.7, ease: E }, t + 0.05 + (k - 1) * 0.09);
+      tl.fromTo(pc + " .ci img", { scale: 1.0 }, { scale: 1.14, duration: 44.0 - t, ease: "none" }, t);
+    });
+    if (i > 0) tl.to(["#pc" + i + "1", "#pc" + i + "2"], { opacity: 0.6, duration: 0.5 }, t);
   });
+  tl.to(["#pc61", "#pc62"], { opacity: 1, duration: 0.01 }, 43.0);
   hide("#proc", 44.0);
 
   // ===== 44 – 51  WHY PRC BUILDERS =====
