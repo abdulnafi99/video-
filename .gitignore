@@ -6,3 +6,6 @@ data/
 .remotion/
 remotion-bundle/
 server/scripts/_scratch/
+projects/*/renders/
+projects/*/.hyperframes/
+projects/*/assets/audio/.tmp/

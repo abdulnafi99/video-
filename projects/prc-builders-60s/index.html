@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>PRC Builders Sdn. Bhd. — Corporate Film 60s</title>
+<script src="./lib/gsap.min.js"></script>
+<style>
+@font-face { font-family:"Inter"; font-weight:300; src:url("./lib/fonts/inter-300.woff2") format("woff2"); }
+@font-face { font-family:"Inter"; font-weight:400; src:url("./lib/fonts/inter-400.woff2") format("woff2"); }
+@font-face { font-family:"Inter"; font-weight:500; src:url("./lib/fonts/inter-500.woff2") format("woff2"); }
+@font-face { font-family:"Inter"; font-weight:600; src:url("./lib/fonts/inter-600.woff2") format("woff2"); }
+@font-face { font-family:"Inter"; font-weight:700; src:url("./lib/fonts/inter-700.woff2") format("woff2"); }
+@font-face { font-family:"Space Grotesk"; font-weight:500; src:url("./lib/fonts/sg-500.woff2") format("woff2"); }
+@font-face { font-family:"Space Grotesk"; font-weight:600; src:url("./lib/fonts/sg-600.woff2") format("woff2"); }
+:root { --gold:#C9A45C; --gold-hi:#E6C98A; --ink:#0E0F11; --char:#141518; --white:#F5F4F1; --mute:rgba(245,244,241,.68); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -webkit-font-smoothing:antialiased; }
+#root { position:relative; width:1920px; height:1080px; overflow:hidden; font-family:Inter, sans-serif; color:var(--white); background:#000; }
+.layer { position:absolute; inset:0; }
+#gl { position:absolute; inset:0; width:1920px; height:1080px; display:block; opacity:0; }
+
+/* shared type */
+.eyebrow { font-weight:500; font-size:19px; letter-spacing:.42em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:22px; }
+.eyebrow::before { content:""; width:56px; height:1px; background:var(--gold); display:block; }
+.mask { display:block; overflow:hidden; padding-bottom:.08em; }
+.mask > span { display:inline-block; will-change:transform; }
+.gold { color:var(--gold-hi); }
+
+/* grade */
+#vignette { background:radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); pointer-events:none; }
+#grain { opacity:.05; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); background-size:300px 300px; mix-blend-mode:overlay; }
+#dip { background:#000; opacity:0; }
+
+/* S1 logo */
+#intro { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.logo-wrap { position:relative; width:500px; height:385px; }
+.logo-wrap img, .logo-shine { position:absolute; inset:0; width:100%; height:100%; }
+.logo-wrap img { object-fit:contain; -webkit-mask-image:linear-gradient(105deg, #000 0%, #000 40%, transparent 52%, transparent 100%); -webkit-mask-size:300% 100%; -webkit-mask-position:var(--m, 100%) 0; }
+.logo-shine { -webkit-mask-image:url("./assets/prc-logo.png"); -webkit-mask-size:contain; -webkit-mask-repeat:no-repeat; -webkit-mask-position:center;
+  background:linear-gradient(105deg, rgba(255,255,255,0) 40%, rgba(255,250,235,.95) 50%, rgba(255,255,255,0) 60%); background-size:300% 100%; background-position:var(--s, 100%) 0; mix-blend-mode:screen; }
+.intro-word { margin-top:46px; font-weight:500; font-size:22px; letter-spacing:.62em; padding-left:.62em; color:var(--white); }
+.intro-line { margin-top:22px; width:420px; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
+#sweep { background:linear-gradient(105deg, transparent 42%, rgba(255,236,200,.10) 50%, transparent 58%); background-size:300% 100%; background-position:var(--s, 100%) 0; }
+
+/* S1b */
+#s1b { left:140px; bottom:150px; top:auto; right:auto; }
+#s1b .big { font-weight:600; font-size:92px; line-height:1.04; letter-spacing:.01em; }
+.scrim-b { background:linear-gradient(0deg, rgba(5,6,8,.72) 0%, rgba(5,6,8,0) 52%); }
+.scrim-l { background:linear-gradient(90deg, rgba(5,8,14,.82) 0%, rgba(5,8,14,.45) 38%, rgba(5,8,14,0) 62%); }
+
+/* S2 */
+#s2 { left:140px; top:330px; right:auto; bottom:auto; width:1300px; }
+#s2 h1 { margin-top:34px; font-weight:600; font-size:86px; line-height:1.05; letter-spacing:-.005em; }
+#s2 p { margin-top:26px; font-weight:300; font-size:36px; color:var(--mute); }
+#hud { pointer-events:none; }
+.bracket { position:absolute; width:46px; height:46px; border-color:rgba(230,201,138,.55); border-style:solid; border-width:0; }
+.b-tl { left:60px; top:60px; border-left-width:1px; border-top-width:1px; } .b-tr { right:60px; top:60px; border-right-width:1px; border-top-width:1px; }
+.b-bl { left:60px; bottom:60px; border-left-width:1px; border-bottom-width:1px; } .b-br { right:60px; bottom:60px; border-right-width:1px; border-bottom-width:1px; }
+.hud-tag { position:absolute; right:120px; top:92px; font-family:"Space Grotesk"; font-weight:500; font-size:15px; letter-spacing:.3em; color:rgba(230,201,138,.75); text-align:right; line-height:1.9; }
+#plan-list { position:absolute; right:120px; bottom:120px; width:420px; }
+.pl-row { display:flex; align-items:center; gap:18px; padding:16px 0; border-top:1px solid rgba(255,255,255,.14); font-size:22px; font-weight:400; color:var(--white); }
+.pl-row:last-child { border-bottom:1px solid rgba(255,255,255,.14); }
+.tick { width:24px; height:24px; border:1px solid var(--gold); border-radius:50%; position:relative; flex:none; }
+.tick i { position:absolute; inset:5px; border-radius:50%; background:var(--gold); transform:scale(0); }
+
+/* S3 */
+#s3h { left:140px; top:96px; right:auto; bottom:auto; }
+#s3h h2 { margin-top:20px; font-weight:600; font-size:52px; letter-spacing:-.005em; }
+.scrim-t { background:linear-gradient(180deg, rgba(5,6,8,.7) 0%, rgba(5,6,8,0) 34%); }
+.svc { position:absolute; left:140px; bottom:130px; }
+.svc .num { font-family:"Space Grotesk"; font-weight:500; font-size:26px; color:var(--gold); letter-spacing:.12em; display:flex; align-items:center; gap:18px; }
+.svc .num::after { content:""; width:70px; height:1px; background:var(--gold); }
+.svc .ttl { margin-top:14px; font-weight:600; font-size:56px; letter-spacing:-.005em; }
+#svc-ticks { position:absolute; left:140px; bottom:84px; display:flex; gap:10px; }
+#svc-ticks b { width:42px; height:3px; background:rgba(255,255,255,.22); position:relative; overflow:hidden; }
+#svc-ticks b i { position:absolute; inset:0; background:var(--gold); transform-origin:0 50%; transform:scaleX(0); }
+#reno-line { position:absolute; top:0; bottom:0; width:2px; margin-left:-1px; background:linear-gradient(180deg, transparent, var(--gold-hi) 18%, var(--gold-hi) 82%, transparent); box-shadow:0 0 22px rgba(230,201,138,.6); left:0; }
+.reno-tag { position:absolute; top:330px; font-weight:500; font-size:18px; letter-spacing:.4em; padding:10px 18px; background:rgba(10,10,12,.55); border:1px solid rgba(255,255,255,.25); }
+#tag-before { right:24px; } #tag-after { left:24px; color:var(--gold-hi); border-color:rgba(230,201,138,.6); }
+
+/* consultation board */
+#board { background:radial-gradient(ellipse 60% 70% at 60% 45%, #1b1c20 0%, #0d0e10 70%); }
+#board .grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size:48px 48px; }
+#plan { position:absolute; left:150px; top:260px; width:600px; height:520px; }
+#plan path, #plan rect, #plan line { fill:none; stroke:var(--gold-hi); stroke-width:2.2; }
+#plan .thin { stroke:rgba(230,201,138,.45); stroke-width:1.2; }
+#plan text { fill:rgba(245,244,241,.65); font-family:Inter; font-size:15px; letter-spacing:.18em; stroke:none; }
+#sched { position:absolute; left:880px; top:300px; width:900px; padding:44px 48px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.025); }
+#sched .h { font-weight:500; font-size:17px; letter-spacing:.38em; color:var(--gold); }
+.weeks { display:flex; margin:30px 0 8px 230px; } .weeks span { flex:1; font-size:13px; letter-spacing:.2em; color:rgba(255,255,255,.4); border-left:1px solid rgba(255,255,255,.1); padding-left:8px; }
+.bar-row { display:flex; align-items:center; height:62px; border-top:1px solid rgba(255,255,255,.08); }
+.bar-row label { width:230px; font-size:22px; color:var(--white); }
+.bar-row .lane { flex:1; position:relative; height:100%; }
+.bar-row .bar { position:absolute; top:22px; height:18px; border-radius:2px; background:linear-gradient(90deg, var(--gold), var(--gold-hi)); transform-origin:0 50%; transform:scaleX(0); }
+
+/* S4 process */
+#proc { background:radial-gradient(ellipse 55% 60% at 50% 55%, #1a1b1f 0%, #0b0c0e 72%); }
+#proc .grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:64px 64px; -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 55%, #000 30%, transparent 80%); }
+#proc-head { position:absolute; left:0; right:0; top:190px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+#proc-head .eyebrow::after { content:""; width:56px; height:1px; background:var(--gold); display:block; }
+#proc-head h2 { margin-top:26px; font-weight:600; font-size:64px; letter-spacing:-.01em; }
+#track { position:absolute; left:210px; width:1500px; top:640px; height:2px; background:rgba(255,255,255,.14); transform-origin:0 50%; }
+#track-fill { position:absolute; left:210px; width:1500px; top:640px; height:2px; background:linear-gradient(90deg, var(--gold), var(--gold-hi)); transform-origin:0 50%; transform:scaleX(0); box-shadow:0 0 16px rgba(230,201,138,.55); }
+.node { position:absolute; top:641px; width:300px; margin-left:-150px; text-align:center; }
+.node .n { position:absolute; left:0; right:0; bottom:42px; font-family:"Space Grotesk"; font-weight:500; font-size:58px; color:rgba(230,201,138,.28); letter-spacing:.02em; }
+.node .dot { position:absolute; left:50%; top:-11px; width:22px; height:22px; margin-left:-11px; border-radius:50%; border:2px solid rgba(255,255,255,.35); background:#0f1013; }
+.node .dot i { position:absolute; inset:3px; border-radius:50%; background:var(--gold-hi); transform:scale(0); box-shadow:0 0 18px rgba(230,201,138,.9); }
+.node .t { position:absolute; left:0; right:0; top:44px; font-weight:500; font-size:30px; color:rgba(245,244,241,.4); letter-spacing:.01em; }
+
+/* S5 */
+#s5 { left:140px; top:300px; right:auto; bottom:auto; width:820px; }
+.kw { display:flex; align-items:baseline; gap:26px; padding:24px 0; border-top:1px solid rgba(255,255,255,.16); }
+.kw:last-child { border-bottom:1px solid rgba(255,255,255,.16); }
+.kw .i { font-family:"Space Grotesk"; font-weight:500; font-size:22px; color:var(--gold); width:40px; }
+.kw .w { font-weight:500; font-size:44px; letter-spacing:-.005em; }
+#s5t { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#s5t .big { font-weight:600; font-size:100px; line-height:1.06; letter-spacing:.015em; }
+.scrim-c { background:radial-gradient(ellipse 62% 48% at 50% 50%, rgba(5,6,8,.62) 0%, rgba(5,6,8,0) 100%); }
+
+/* S6 */
+#s6scrim { background:radial-gradient(ellipse 48% 52% at 50% 52%, rgba(4,5,7,.78) 0%, rgba(4,5,7,.45) 60%, rgba(4,5,7,.2) 100%); opacity:0; }
+#s6 { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-bottom:20px; }
+#s6 .logo-wrap { width:290px; height:223px; }
+#s6 .cta { margin-top:46px; font-weight:600; font-size:70px; letter-spacing:.02em; }
+#s6 .rule { margin:34px auto 30px; width:520px; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
+#s6 .co { font-weight:600; font-size:26px; letter-spacing:.34em; padding-left:.34em; }
+#s6 .tag { margin-top:14px; font-weight:300; font-size:26px; color:var(--mute); }
+#s6 .web { margin-top:34px; font-weight:500; font-size:24px; letter-spacing:.12em; color:var(--gold-hi); }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="root" data-start="0" data-duration="60" data-width="1920" data-height="1080" data-fps="30">
+
+  <canvas id="gl" width="1920" height="1080"></canvas>
+
+  <!-- S1: logo light sweep -->
+  <div class="layer" id="intro">
+    <div class="logo-wrap" id="intro-logo"><img src="./assets/prc-logo.png" alt="PRC" /><div class="logo-shine"></div></div>
+    <div class="intro-word" id="intro-word">PRC BUILDERS</div>
+    <div class="intro-line" id="intro-line"></div>
+  </div>
+  <div class="layer" id="sweep"></div>
+
+  <!-- S1b -->
+  <div class="layer scrim-b" id="s1b-scrim" style="opacity:0"></div>
+  <div class="layer" id="s1b">
+    <span class="mask big"><span id="s1b-a">BUILDING HOMES.</span></span>
+    <span class="mask big"><span id="s1b-b" class="gold">CREATING LASTING VALUE.</span></span>
+  </div>
+
+  <!-- S2 -->
+  <div class="layer scrim-l" id="s2-scrim" style="opacity:0"></div>
+  <div class="layer" id="hud" style="opacity:0">
+    <div class="bracket b-tl"></div><div class="bracket b-tr"></div><div class="bracket b-bl"></div><div class="bracket b-br"></div>
+    <div class="hud-tag">RESIDENTIAL PROJECT<br />ARCHITECTURAL DESIGN · A-101</div>
+    <div id="plan-list">
+      <div class="pl-row" id="pl1"><span class="tick"><i></i></span>Architectural Design</div>
+      <div class="pl-row" id="pl2"><span class="tick"><i></i></span>Project Planning</div>
+      <div class="pl-row" id="pl3"><span class="tick"><i></i></span>Construction Coordination</div>
+    </div>
+  </div>
+  <div class="layer" id="s2">
+    <div class="eyebrow" id="s2-eb">WHO WE ARE</div>
+    <h1><span class="mask"><span id="s2-h">PRC Builders Sdn. Bhd.</span></span></h1>
+    <p id="s2-p">Your Residential Construction Partner.</p>
+  </div>
+
+  <!-- S3: consultation board (2D) -->
+  <div class="layer" id="board" style="opacity:0">
+    <div class="grid"></div>
+    <svg id="plan" viewBox="0 0 600 520">
+      <rect class="d" x="20" y="20" width="560" height="440" />
+      <line class="d" x1="300" y1="20" x2="300" y2="250" />
+      <line class="d" x1="20" y1="250" x2="420" y2="250" />
+      <line class="d" x1="420" y1="250" x2="420" y2="460" />
+      <line class="d" x1="160" y1="250" x2="160" y2="460" />
+      <path class="d thin" d="M300 120 A60 60 0 0 1 360 180" />
+      <path class="d thin" d="M160 350 A50 50 0 0 0 210 400" />
+      <line class="d thin" x1="20" y1="490" x2="580" y2="490" />
+      <line class="d thin" x1="20" y1="482" x2="20" y2="498" /><line class="d thin" x1="580" y1="482" x2="580" y2="498" />
+      <text x="60" y="140">LIVING</text><text x="340" y="80">KITCHEN</text><text x="50" y="360">BED 1</text><text x="230" y="340">BED 2</text><text x="450" y="360">STUDY</text>
+    </svg>
+    <div id="sched">
+      <div class="h">PROJECT SCHEDULE</div>
+      <div class="weeks"><span>PHASE 1</span><span>PHASE 2</span><span>PHASE 3</span><span>PHASE 4</span></div>
+      <div class="bar-row"><label>Planning</label><div class="lane"><div class="bar" id="bar1" style="left:0%;width:30%"></div></div></div>
+      <div class="bar-row"><label>Design</label><div class="lane"><div class="bar" id="bar2" style="left:18%;width:32%"></div></div></div>
+      <div class="bar-row"><label>Construction</label><div class="lane"><div class="bar" id="bar3" style="left:40%;width:46%"></div></div></div>
+      <div class="bar-row"><label>Handover</label><div class="lane"><div class="bar" id="bar4" style="left:84%;width:16%"></div></div></div>
+    </div>
+  </div>
+
+  <!-- S3 overlays -->
+  <div class="layer scrim-t" id="s3-scrim" style="opacity:0"></div>
+  <div class="layer scrim-b" id="s3-scrim-b" style="opacity:0"></div>
+  <div id="reno" class="layer" style="opacity:0">
+    <div id="reno-line"><span class="reno-tag" id="tag-before">BEFORE</span><span class="reno-tag" id="tag-after">AFTER</span></div>
+  </div>
+  <div class="layer" id="s3h">
+    <div class="eyebrow" id="s3-eb">FROM DESIGN TO COMPLETION</div>
+    <h2><span class="mask"><span id="s3-h">Complete Residential Solutions.</span></span></h2>
+  </div>
+  <div class="svc" id="svc1"><div class="num">01</div><div class="ttl">Design &amp; Build</div></div>
+  <div class="svc" id="svc2"><div class="num">02</div><div class="ttl">New House Construction</div></div>
+  <div class="svc" id="svc3"><div class="num">03</div><div class="ttl">Renovation &amp; Extension</div></div>
+  <div class="svc" id="svc4"><div class="num">04</div><div class="ttl">Interior Works</div></div>
+  <div class="svc" id="svc5"><div class="num">05</div><div class="ttl">Consultation &amp; Project Management</div></div>
+  <div id="svc-ticks" style="opacity:0"><b><i id="tk1"></i></b><b><i id="tk2"></i></b><b><i id="tk3"></i></b><b><i id="tk4"></i></b><b><i id="tk5"></i></b></div>
+
+  <!-- S4: process -->
+  <div class="layer" id="proc" style="opacity:0">
+    <div class="grid"></div>
+    <div id="proc-head">
+      <div class="eyebrow" id="p-eb">OUR PROCESS</div>
+      <h2><span class="mask"><span id="p-h">From First Conversation to Handover.</span></span></h2>
+    </div>
+    <div id="track"></div><div id="track-fill"></div>
+    <div class="node" id="nd1" style="left:210px"><div class="n">01</div><div class="dot"><i></i></div><div class="t">Understand</div></div>
+    <div class="node" id="nd2" style="left:510px"><div class="n">02</div><div class="dot"><i></i></div><div class="t">Plan</div></div>
+    <div class="node" id="nd3" style="left:810px"><div class="n">03</div><div class="dot"><i></i></div><div class="t">Design</div></div>
+    <div class="node" id="nd4" style="left:1110px"><div class="n">04</div><div class="dot"><i></i></div><div class="t">Build</div></div>
+    <div class="node" id="nd5" style="left:1410px"><div class="n">05</div><div class="dot"><i></i></div><div class="t">Review</div></div>
+    <div class="node" id="nd6" style="left:1710px"><div class="n">06</div><div class="dot"><i></i></div><div class="t">Handover</div></div>
+  </div>
+
+  <!-- S5 -->
+  <div class="layer scrim-l" id="s5-scrim" style="opacity:0"></div>
+  <div class="layer" id="s5">
+    <div class="eyebrow" id="s5-eb" style="margin-bottom:36px">WHY PRC BUILDERS</div>
+    <div class="kw" id="kw1"><span class="i">01</span><span class="w">Professional Project Management</span></div>
+    <div class="kw" id="kw2"><span class="i">02</span><span class="w">Quality-Focused Workmanship</span></div>
+    <div class="kw" id="kw3"><span class="i">03</span><span class="w">Client-Centred Approach</span></div>
+    <div class="kw" id="kw4"><span class="i">04</span><span class="w">Commitment to Delivery</span></div>
+  </div>
+  <div class="layer scrim-c" id="s5t-scrim" style="opacity:0"></div>
+  <div class="layer" id="s5t">
+    <span class="mask big"><span id="s5t-a">PLAN WITH PURPOSE.</span></span>
+    <span class="mask big"><span id="s5t-b" class="gold">BUILD WITH PRECISION.</span></span>
+  </div>
+
+  <!-- S6 -->
+  <div class="layer" id="s6scrim"></div>
+  <div class="layer" id="s6">
+    <div class="logo-wrap" id="end-logo" style="opacity:0"><img src="./assets/prc-logo.png" alt="PRC" /><div class="logo-shine"></div></div>
+    <div class="cta"><span class="mask"><span id="s6-cta">LET’S BUILD YOUR VISION.</span></span></div>
+    <div class="rule" id="s6-rule"></div>
+    <div class="co" id="s6-co">PRC BUILDERS SDN. BHD.</div>
+    <div class="tag" id="s6-tag">Building Homes. Creating Lasting Value.</div>
+    <div class="web" id="s6-web">prcgroupglobal.com.my/PRCBuilders</div>
+  </div>
+
+  <div class="layer" id="vignette"></div>
+  <div class="layer" id="grain"></div>
+  <div class="layer" id="dip"></div>
+
+  <audio id="soundtrack" src="./assets/audio/mix.wav" data-start="0" data-duration="60" data-volume="1"></audio>
+</div>
+
+<script>
+// Split position (fraction of frame width) for the renovation before/after wipe; shared with world.js.
+window.__renoSplit = function (t) {
+  var x = Math.min(1, Math.max(0, (t - 21.0) / 1.9));
+  var e = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; // = GSAP power2.inOut
+  return 0.88 - 0.5 * e;
+};
+(function () {
+  var tl = gsap.timeline({ paused: true });
+  var E = "power3.out", EI = "power2.inOut";
+
+  // ---------- grade: film grain drift (stepped, deterministic)
+  tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "9000px 5400px", duration: 60, ease: "steps(1800)" }, 0);
+
+  // ---------- dips to black between chapters (cut happens at the boundary)
+  function dip(at, inD, outD) { tl.to("#dip", { opacity: 1, duration: inD, ease: "power1.in" }, at - inD); tl.to("#dip", { opacity: 0, duration: outD, ease: "power1.out" }, at); }
+  [6.0, 15.0, 29.0, 40.0, 51.0].forEach(function (t) { dip(t, 0.35, 0.5); });
+  [17.8, 20.6, 23.4, 26.2, 43.5, 47.6].forEach(function (t) { dip(t, 0.2, 0.3); });
+
+  // ---------- 3D canvas visibility
+  tl.set("#gl", { opacity: 0 }, 0);
+  tl.to("#gl", { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 2.5);
+  tl.set("#gl", { opacity: 0 }, 26.2);
+  tl.set("#gl", { opacity: 1 }, 40.0);
+
+  // ================= S1 (0 – 6) =================
+  tl.fromTo("#intro-logo", { "--m": "100%", "--s": "100%", scale: 0.96 }, { "--m": "0%", "--s": "0%", scale: 1, duration: 1.9, ease: "power2.inOut" }, 0.25);
+  tl.fromTo("#sweep", { "--s": "100%" }, { "--s": "0%", duration: 1.9, ease: "power2.inOut" }, 0.25);
+  tl.fromTo("#intro-word", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 1.2, ease: E }, 1.25);
+  tl.fromTo("#intro-line", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: EI }, 1.45);
+  tl.to("#intro", { opacity: 0, scale: 1.04, duration: 0.8, ease: "power2.in" }, 2.45);
+  tl.to("#s1b-scrim", { opacity: 1, duration: 1 }, 3.0);
+  tl.fromTo("#s1b-a", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 3.25);
+  tl.fromTo("#s1b-b", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 3.85);
+  tl.to(["#s1b-a", "#s1b-b"], { yPercent: -105, duration: 0.5, ease: "power2.in", stagger: 0.08 }, 5.25);
+  tl.set("#s1b-scrim", { opacity: 0 }, 6.0);
+
+  // ================= S2 (6 – 15) =================
+  tl.set("#s2-scrim", { opacity: 1 }, 6.0);
+  tl.to("#hud", { opacity: 1, duration: 0.8 }, 6.3);
+  tl.fromTo("#s2-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.8, ease: E }, 6.6);
+  tl.fromTo("#s2-h", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: E }, 6.9);
+  tl.fromTo("#s2-p", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9, ease: E }, 7.5);
+  ["#pl1", "#pl2", "#pl3"].forEach(function (id, i) {
+    tl.fromTo(id, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 7.6 + i * 1.0);
+    tl.to(id + " .tick i", { scale: 1, duration: 0.4, ease: "back.out(2)" }, 8.0 + i * 1.0);
+  });
+  tl.to("#plan-list", { opacity: 0, duration: 0.6 }, 12.4);
+  tl.to(["#s2-eb", "#s2-h", "#s2-p"], { opacity: 0, y: -10, duration: 0.5, stagger: 0.06 }, 14.2);
+  tl.to("#hud", { opacity: 0, duration: 0.5 }, 14.3);
+  tl.set("#s2-scrim", { opacity: 0 }, 15.0);
+
+  // ================= S3 (15 – 29) =================
+  tl.set(["#s3-scrim", "#s3-scrim-b"], { opacity: 1 }, 15.0);
+  tl.fromTo("#s3-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.8, ease: E }, 15.3);
+  tl.fromTo("#s3-h", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 15.5);
+  tl.to("#svc-ticks", { opacity: 1, duration: 0.5 }, 15.4);
+  [15.0, 17.8, 20.6, 23.4, 26.2].forEach(function (t0, i) {
+    var id = "#svc" + (i + 1);
+    tl.fromTo(id + " .num", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, t0 + 0.3);
+    tl.fromTo(id + " .ttl", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.7, ease: E }, t0 + 0.4);
+    tl.to("#tk" + (i + 1), { scaleX: 1, duration: 2.5, ease: "none" }, t0 + 0.2);
+    if (i < 4) tl.to([id + " .num", id + " .ttl"], { opacity: 0, duration: 0.25 }, t0 + 2.5);
+  });
+  tl.set([".svc .num", ".svc .ttl"], { opacity: 0 }, 0);
+  // renovation wipe line + labels
+  tl.set("#reno", { opacity: 1 }, 20.6);
+  tl.fromTo("#reno-line", { x: 0.88 * 1920 }, { x: 0.38 * 1920, duration: 1.9, ease: "power2.inOut" }, 21.0);
+  tl.fromTo(".reno-tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 20.8);
+  tl.set("#reno", { opacity: 0 }, 23.4);
+  // consultation board
+  tl.set("#board", { opacity: 1 }, 26.2);
+  tl.set("#s3-scrim-b", { opacity: 0 }, 26.2);
+  document.querySelectorAll("#plan .d").forEach(function (el, i) {
+    var L = el.getTotalLength ? el.getTotalLength() : 1000;
+    el.style.strokeDasharray = L; el.style.strokeDashoffset = L;
+    tl.to(el, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 26.4 + i * 0.12);
+  });
+  tl.fromTo("#plan text", { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.08 }, 27.4);
+  tl.fromTo("#sched", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 26.4);
+  ["#bar1", "#bar2", "#bar3", "#bar4"].forEach(function (id, i) { tl.to(id, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 26.9 + i * 0.3); });
+  tl.to(["#s3h", "#svc5", "#svc-ticks"], { opacity: 0, duration: 0.3 }, 28.65);
+  tl.set(["#board", "#s3-scrim"], { opacity: 0 }, 29.0);
+
+  // ================= S4 (29 – 40) =================
+  tl.set("#proc", { opacity: 1 }, 29.0);
+  tl.fromTo("#proc", { scale: 1.0 }, { scale: 1.035, duration: 11, ease: "none" }, 29.0);
+  tl.fromTo("#p-eb", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 29.3);
+  tl.fromTo("#p-h", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: E }, 29.5);
+  tl.fromTo("#track", { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: EI }, 30.2);
+  [1, 2, 3, 4, 5, 6].forEach(function (k, i) {
+    var id = "#nd" + k;
+    tl.fromTo(id, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: E }, 30.6 + i * 0.14);
+  });
+  var stepT = [32.4, 33.65, 34.9, 36.15, 37.4, 38.65];
+  stepT.forEach(function (t, i) {
+    var id = "#nd" + (i + 1);
+    tl.to("#track-fill", { scaleX: i / 5, duration: i === 0 ? 0.01 : 0.6, ease: EI }, t - (i === 0 ? 0 : 0.35));
+    tl.to(id + " .dot i", { scale: 1, duration: 0.45, ease: "back.out(2.2)" }, t);
+    tl.to(id + " .dot", { borderColor: "rgba(230,201,138,1)", duration: 0.3 }, t);
+    tl.to(id + " .n", { color: "rgba(230,201,138,1)", duration: 0.35 }, t);
+    tl.to(id + " .t", { color: "rgba(245,244,241,1)", y: -4, duration: 0.35 }, t);
+    if (i > 0) tl.to("#nd" + i + " .n", { color: "rgba(230,201,138,.55)", duration: 0.4 }, t);
+  });
+  tl.to(["#proc-head", ".node", "#track", "#track-fill"], { opacity: 0, duration: 0.4 }, 39.55);
+  tl.set("#proc", { opacity: 0 }, 40.0);
+
+  // ================= S5 (40 – 51) =================
+  tl.set("#s5-scrim", { opacity: 1 }, 40.0);
+  tl.fromTo("#s5-eb", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 40.2);
+  var kwT = [40.3, 42.2, 43.9, 46.0];
+  kwT.forEach(function (t, i) {
+    var id = "#kw" + (i + 1);
+    tl.fromTo(id, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, t);
+    if (i > 0) tl.to("#kw" + i + " .w", { opacity: 0.45, duration: 0.5 }, t);
+  });
+  tl.to("#s5", { opacity: 0, duration: 0.3 }, 47.3);
+  tl.set("#s5-scrim", { opacity: 0 }, 47.6);
+  tl.to("#s5t-scrim", { opacity: 1, duration: 0.8 }, 47.6);
+  tl.fromTo("#s5t-a", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 47.85);
+  tl.fromTo("#s5t-b", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: E }, 49.2);
+  tl.to(["#s5t-a", "#s5t-b"], { yPercent: -105, duration: 0.45, ease: "power2.in", stagger: 0.06 }, 50.4);
+  tl.set("#s5t-scrim", { opacity: 0 }, 51.0);
+
+  // ================= S6 (51 – 60) =================
+  tl.to("#s6scrim", { opacity: 1, duration: 1.6, ease: "power1.inOut" }, 53.8);
+  tl.set("#end-logo", { opacity: 1 }, 54.9);
+  tl.fromTo("#end-logo", { "--m": "100%", "--s": "100%", y: 10 }, { "--m": "0%", "--s": "0%", y: 0, duration: 1.5, ease: "power2.inOut" }, 54.9);
+  tl.fromTo("#s6-cta", { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: E }, 55.9);
+  tl.fromTo("#s6-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: EI }, 56.5);
+  tl.fromTo("#s6-co", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 56.7);
+  tl.fromTo("#s6-tag", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.0);
+  tl.fromTo("#s6-web", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.35);
+
+  tl.set({}, {}, 60);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["root"] = tl;
+})();
+</script>
+<script type="module" src="./world.js"></script>
+</body>
+</html>
