@@ -127,12 +127,38 @@ html, body { width:1920px; height:1080px; overflow:hidden; background:#000; -web
 #s6 .co { font-weight:600; font-size:26px; letter-spacing:.34em; padding-left:.34em; }
 #s6 .tag { margin-top:14px; font-weight:300; font-size:26px; color:var(--mute); }
 #s6 .web { margin-top:34px; font-weight:500; font-size:24px; letter-spacing:.12em; color:var(--gold-hi); }
+
+/* real PRC project photos */
+.photo { position:absolute; inset:0; overflow:hidden; opacity:0; }
+.photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; will-change:transform; }
+.photo .grade { position:absolute; inset:0; }
+#ph-s1 img { object-position:50% 38%; }
+#ph-s2 { clip-path:inset(0 100% 0 0); }
+#ph-s2 img { object-position:50% 55%; }
+#ph-s2-line { position:absolute; top:0; bottom:0; left:0; width:3px; margin-left:-1.5px; background:linear-gradient(180deg, transparent, var(--gold-hi) 15%, var(--gold-hi) 85%, transparent); box-shadow:0 0 30px 6px rgba(230,201,138,.55); opacity:0; }
+#ph-int img { object-position:50% 50%; }
+#ph-kit .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#ph-kit .card { position:absolute; left:990px; top:210px; width:830px; height:620px; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); }
+#ph-kit .card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+#ph-detail img { object-position:38% 62%; transform-origin:36% 62%; }
+#ph-end img { object-position:50% 45%; filter:sepia(.12) saturate(1.15) contrast(1.05) brightness(1.02); }
+#ph-end .grade { background:linear-gradient(200deg, rgba(255,170,90,.55) 0%, rgba(255,140,60,.25) 45%, rgba(60,30,15,.35) 100%); mix-blend-mode:soft-light; }
+.photo .shade { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,.22) 100%); }
 </style>
 </head>
 <body>
 <div id="root" data-composition-id="root" data-start="0" data-duration="60" data-width="1920" data-height="1080" data-fps="30">
 
   <canvas id="gl" width="1920" height="1080"></canvas>
+
+  <!-- real PRC project photos -->
+  <div class="photo" id="ph-s1"><img src="./assets/photos/exterior.jpg" alt="" /><div class="shade"></div></div>
+  <div class="photo" id="ph-s2"><img src="./assets/photos/exterior.jpg" alt="" /><div class="shade"></div></div>
+  <div id="ph-s2-line"></div>
+  <div class="photo" id="ph-int"><img src="./assets/photos/interior.jpg" alt="" /><div class="shade"></div></div>
+  <div class="photo" id="ph-kit"><img class="bg" src="./assets/photos/kitchen-bg.jpg" alt="" /><div class="card"><img src="./assets/photos/kitchen.jpg" alt="" /></div></div>
+  <div class="photo" id="ph-detail"><img src="./assets/photos/exterior.jpg" alt="" /><div class="shade"></div></div>
+  <div class="photo" id="ph-end"><img src="./assets/photos/exterior.jpg" alt="" /><div class="grade"></div></div>
 
   <!-- S1: logo light sweep -->
   <div class="layer" id="intro">
@@ -278,7 +304,7 @@ window.__renoSplit = function (t) {
 
   // ---------- 3D canvas visibility
   tl.set("#gl", { opacity: 0 }, 0);
-  tl.to("#gl", { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 2.5);
+  tl.set("#gl", { opacity: 1 }, 6.0);
   tl.set("#gl", { opacity: 0 }, 26.2);
   tl.set("#gl", { opacity: 1 }, 40.0);
 
@@ -390,6 +416,34 @@ window.__renoSplit = function (t) {
   tl.fromTo("#s6-co", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 56.7);
   tl.fromTo("#s6-tag", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.0);
   tl.fromTo("#s6-web", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: E }, 57.35);
+
+  // ================= real photos =================
+  // S1b: completed home, slow push-out
+  tl.to("#ph-s1", { opacity: 1, duration: 1.0, ease: "power1.inOut" }, 2.5);
+  tl.fromTo("#ph-s1 img", { scale: 1.14, x: 30 }, { scale: 1.0, x: 0, duration: 3.8, ease: "none" }, 2.4);
+  tl.set("#ph-s1", { opacity: 0 }, 6.0);
+  // S2: gold scan line wipes the 3D design into the real house
+  tl.set("#ph-s2", { opacity: 1 }, 11.4);
+  tl.fromTo("#ph-s2", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power2.inOut" }, 11.5);
+  tl.set("#ph-s2-line", { opacity: 1 }, 11.5);
+  tl.fromTo("#ph-s2-line", { x: 0 }, { x: 1920, duration: 1.5, ease: "power2.inOut" }, 11.5);
+  tl.set("#ph-s2-line", { opacity: 0 }, 13.0);
+  tl.fromTo("#ph-s2 img", { scale: 1.04 }, { scale: 1.12, duration: 3.6, ease: "none" }, 11.4);
+  tl.set("#ph-s2", { opacity: 0 }, 15.0);
+  // Interior Works: bedroom, then kitchen
+  tl.set("#ph-int", { opacity: 1 }, 23.4);
+  tl.fromTo("#ph-int img", { scale: 1.0, x: 0 }, { scale: 1.08, x: -40, duration: 1.8, ease: "none" }, 23.4);
+  tl.to("#ph-kit", { opacity: 1, duration: 0.45, ease: "power1.inOut" }, 24.75);
+  tl.fromTo("#ph-kit .card", { y: 30, scale: 0.98 }, { y: 0, scale: 1, duration: 1.4, ease: "power2.out" }, 24.75);
+  tl.fromTo("#ph-kit .card img", { scale: 1.06 }, { scale: 1.0, duration: 1.45, ease: "none" }, 24.75);
+  tl.set(["#ph-int", "#ph-kit"], { opacity: 0 }, 26.2);
+  // Why PRC: brick and glass-block craftsmanship detail
+  tl.set("#ph-detail", { opacity: 1 }, 40.0);
+  tl.fromTo("#ph-detail img", { scale: 1.32 }, { scale: 1.5, duration: 3.5, ease: "none" }, 40.0);
+  tl.set("#ph-detail", { opacity: 0 }, 43.5);
+  // Closing: the finished home in a warm golden grade, camera pulling away
+  tl.set("#ph-end", { opacity: 1 }, 51.0);
+  tl.fromTo("#ph-end img", { scale: 1.2, y: -20 }, { scale: 1.0, y: 0, duration: 9, ease: "power1.out" }, 51.0);
 
   tl.set({}, {}, 60);
   window.__timelines = window.__timelines || {};

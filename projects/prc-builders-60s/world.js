@@ -469,6 +469,8 @@ function renderAt(t) {
   renderer.setScissorTest(false);
   renderer.setViewport(0, 0, W, H);
   // ----- S1b: aerial reveal of the finished home (2.6 – 6.0)
+  // real photos cover these spans; skip the 3D draw
+  if (t < 6.0 || (t >= 12.95 && t < 15.0) || (t >= 23.4 && t < 26.2) || (t >= 40.0 && t < 43.5) || t >= 51.0) return;
   if (t < 6.0) {
     resetConstruction(); setTimeOfDay(0.32); showExt({ edgesOn: false }); setClip(1e5, 1e5, -1e5); setShadowBox(22);
     const u = span(t, 2.4, 6.0);
@@ -480,11 +482,11 @@ function renderAt(t) {
     resetConstruction(); setTimeOfDay(0.32); setShadowBox(22);
     const u = span(t, 6.0, 15.0);
     const lineH = lerp(-0.5, 9.0, easeIO(span(t, 6.2, 9.2)));
-    const sweep = t < 9.4 ? -1e4 : lerp(-34, 30, easeIO(span(t, 9.4, 13.2)));
+    const sweep = t < 9.4 ? -1e4 : lerp(-34, 30, easeIO(span(t, 9.4, 11.3)));
     showExt({ edgesOn: true, grid: true, streetOn: true });
     setClip(sweep, lineH, sweep);
     scan.position.set(sweep, 6, 0); scanGlow.position.set(sweep - 0.05, 6, 0);
-    const vis = span(t, 9.4, 9.7) * (1 - span(t, 12.8, 13.2)); scanMat.opacity = 0.9 * vis; scanGlowMat.opacity = 0.06 * vis;
+    const vis = span(t, 9.4, 9.7) * (1 - span(t, 11.0, 11.3)); scanMat.opacity = 0.9 * vis; scanGlowMat.opacity = 0.06 * vis;
     orbit(lerp(0.95, 0.42, easeIO(u)), lerp(34, 25, easeIO(u)), lerp(15, 7.5, easeIO(u)), V(-0.5, lerp(2.2, 2.8, u), 0.5), 34);
     return draw(ext);
   }
