@@ -1,0 +1,51 @@
+{
+  "name": "cinemotion-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CINEMOTION STUDIO — Create. Animate. Inspire. HyperFrames + Remotion promotional video production platform.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:web": "vite",
+    "dev:server": "tsx watch server/index.ts",
+    "build": "tsc --noEmit -p . && vite build",
+    "start": "NODE_ENV=production tsx server/index.ts",
+    "typecheck": "tsc --noEmit -p .",
+    "seed:prc": "tsx server/scripts/seed-prc.ts",
+    "render:cli": "tsx server/scripts/render-project.ts"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@fontsource/space-grotesk": "5.2.10",
+    "@remotion/bundler": "4.0.543",
+    "@remotion/media-utils": "4.0.543",
+    "@remotion/player": "4.0.543",
+    "@remotion/renderer": "4.0.543",
+    "@remotion/transitions": "4.0.543",
+    "express": "5.1.0",
+    "framer-motion": "12.43.0",
+    "gsap": "3.15.1",
+    "hyperframes": "0.9.40",
+    "multer": "2.0.2",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "remotion": "4.0.543",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.5",
+    "@types/multer": "2.0.0",
+    "@types/node": "22.19.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@types/three": "0.181.0",
+    "@vitejs/plugin-react": "5.1.1",
+    "concurrently": "9.2.1",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vite": "7.2.4"
+  }
+}
